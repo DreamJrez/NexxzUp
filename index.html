@@ -111,17 +111,17 @@
   <!-- Mobile Frame Container -->
   <div id="main-container" class="relative w-full max-w-md h-container overflow-hidden glass-panel flex justify-between p-3 gap-2 z-20 sm:rounded-[36px]" style="background: rgba(3, 10, 7, 0.65);">
     
-    <!-- Tap-to-Dismiss Backdrop behind details but above background -->
+    <!-- Tap-to-Dismiss Backdrop behind details but above background (z-10) -->
     <div id="overlay-backdrop" class="absolute inset-0 bg-black/60 z-10 hidden transition-opacity duration-300 opacity-0" onclick="closeAllMenusAndDetails()"></div>
 
     <!-- LEFT SIDEBAR CONTAINER -->
-    <div class="relative w-12 h-full z-30 flex flex-col justify-start">
-      <!-- Left Star Button (Always visible at the top) -->
+    <div class="relative w-12 h-full z-40 flex flex-col justify-start">
+      <!-- Left Star Button (Always visible at the top, z-40) -->
       <button onclick="toggleLeftMenu()" id="btn-left-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
         <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
       </button>
 
-      <!-- Left Vertical Menu Column (Slides down and fades in ONLY when Star is active) -->
+      <!-- Left Vertical Menu Column (Slides down and fades in ONLY when Star is active, z-30) -->
       <div id="left-sidebar-column" class="flex-1 py-4 rounded-2xl bg-black/50 border border-emerald-950/40 flex flex-col justify-between items-center transition-all duration-300 transform -translate-y-4 opacity-0 pointer-events-none mb-1">
         <div class="flex flex-col items-center gap-5 w-full">
           <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
@@ -143,8 +143,8 @@
       </div>
     </div>
 
-    <!-- LEFT EXPANDING SUB-MENU PANEL (Scaled down to w-56 for tighter mobile scaling) -->
-    <div id="left-sub-panel" class="absolute left-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-25 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
+    <!-- LEFT EXPANDING SUB-MENU PANEL (Scaled down to w-56, z-20) -->
+    <div id="left-sub-panel" class="absolute left-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-20 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5 theme-text">Left Portal</h3>
         <button onclick="closeLeftMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
@@ -439,6 +439,7 @@
               </div>
             </div>
 
+            <!-- Lockout switch -->
             <div class="p-2.5 rounded-lg bg-red-950/10 border border-red-500/20 space-y-2">
               <div class="flex justify-between items-center">
                 <div>
@@ -557,7 +558,7 @@
     </div>
 
     <!-- RIGHT EXPANDING SUB-MENU PANEL -->
-    <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-25 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
+    <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-20 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <button onclick="closeRightMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
           <i data-lucide="x" class="w-3.5 h-3.5"></i>
@@ -569,12 +570,12 @@
 
     <!-- RIGHT SIDEBAR CONTAINER -->
     <div class="relative w-12 h-full z-30 flex flex-col justify-start">
-      <!-- Right Star Button (Always visible at the top) -->
+      <!-- Right Star Button (Always visible at the top, z-40) -->
       <button onclick="toggleRightMenu()" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
         <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
       </button>
 
-      <!-- Right Vertical Menu Column (Slides down and fades in ONLY when Star is active) -->
+      <!-- Right Vertical Menu Column (Slides down and fades in ONLY when Star is active, z-30) -->
       <div id="right-sidebar-column" class="flex-1 py-4 rounded-2xl bg-black/50 border border-emerald-950/40 flex flex-col justify-between items-center transition-all duration-300 transform -translate-y-4 opacity-0 pointer-events-none mb-1">
         <div class="flex flex-col items-center gap-5 w-full">
           <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
