@@ -114,37 +114,36 @@
     <!-- Tap-to-Dismiss Backdrop behind details but above background -->
     <div id="overlay-backdrop" class="absolute inset-0 bg-black/60 z-10 hidden transition-opacity duration-300 opacity-0" onclick="closeAllMenusAndDetails()"></div>
 
-    <!-- LEFT SIDEBAR -->
-    <div class="z-30 flex flex-col justify-between items-center w-12 h-full py-4 rounded-2xl bg-black/50 border border-emerald-950/40 relative">
-      <div class="flex flex-col items-center gap-5 w-full">
-        <!-- Pulse Star Menu Trigger -->
-        <button onclick="toggleLeftMenu('ai')" id="btn-left-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse">
-          <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
-        </button>
-        
-        <!-- Left Sidebar Inactive Displays (Menus only open from Star) -->
-        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
-          <i data-lucide="bot" class="w-4 h-4"></i>
-          <span class="text-[8px] mt-0.5 font-semibold">AI</span>
-        </div>
+    <!-- LEFT SIDEBAR CONTAINER -->
+    <div class="relative w-12 h-full z-30 flex flex-col justify-start">
+      <!-- Left Star Button (Always visible at the top) -->
+      <button onclick="toggleLeftMenu()" id="btn-left-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
+        <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
+      </button>
 
-        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
-          <i data-lucide="clapperboard" class="w-4 h-4"></i>
-          <span class="text-[8px] mt-0.5 font-semibold">Video</span>
-        </div>
+      <!-- Left Vertical Menu Column (Slides down and fades in ONLY when Star is active) -->
+      <div id="left-sidebar-column" class="flex-1 py-4 rounded-2xl bg-black/50 border border-emerald-950/40 flex flex-col justify-between items-center transition-all duration-300 transform -translate-y-4 opacity-0 pointer-events-none mb-1">
+        <div class="flex flex-col items-center gap-5 w-full">
+          <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+            <span class="text-[8px] mt-0.5 font-semibold">AI</span>
+          </div>
 
-        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
-          <i data-lucide="lock" class="w-4 h-4"></i>
-          <span class="text-[8px] mt-0.5 font-semibold">Private</span>
+          <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+            <i data-lucide="clapperboard" class="w-4 h-4"></i>
+            <span class="text-[8px] mt-0.5 font-semibold">Video</span>
+          </div>
+
+          <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+            <i data-lucide="lock" class="w-4 h-4"></i>
+            <span class="text-[8px] mt-0.5 font-semibold">Private</span>
+          </div>
         </div>
-      </div>
-      
-      <div class="flex flex-col items-center">
-        <div class="w-1.5 h-1.5 rounded-full bg-emerald-500/30"></div>
+        <div class="w-1 h-1 rounded-full bg-emerald-500/40"></div>
       </div>
     </div>
 
-    <!-- LEFT EXPANDING SUB-MENU PANEL (Scaled down to w-56 for tighter mobile scaling) -->
+    <!-- LEFT EXPANDING SUB-MENU PANEL -->
     <div id="left-sub-panel" class="absolute left-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-25 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5 theme-text">Left Portal</h3>
@@ -164,7 +163,7 @@
       </div>
 
       <!-- CENTER DETAIL: Music Player -->
-      <div id="detail-music" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-music" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('music')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -208,7 +207,7 @@
       </div>
 
       <!-- CENTER DETAIL: Video Player -->
-      <div id="detail-video" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
+      <div id="detail-video" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('video')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -243,7 +242,7 @@
       </div>
 
       <!-- CENTER DETAIL: Private Vault -->
-      <div id="detail-private" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-private" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
           <button onclick="handleDetailBack('private')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -263,7 +262,7 @@
       </div>
 
       <!-- CENTER DETAIL: Gemini AI Chat -->
-      <div id="detail-ai" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-ai" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex flex-col gap-2 pb-2 border-b border-emerald-950/50 shrink-0">
           <div class="flex justify-between items-center">
             <button onclick="handleDetailBack('ai')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -299,7 +298,7 @@
       </div>
 
       <!-- CENTER DETAIL: Social Media -->
-      <div id="detail-social" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-social" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-y-auto">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
             <button onclick="handleDetailBack('social')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -333,7 +332,7 @@
       </div>
 
       <!-- CENTER DETAIL: Profile -->
-      <div id="detail-profile" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-profile" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
             <button onclick="handleDetailBack('profile')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -380,6 +379,7 @@
                 <input type="text" id="input-pfp" placeholder="Avatar URL" class="bg-black/30 border border-emerald-500/10 text-[8px] text-emerald-300 rounded p-1 focus:outline-none col-span-2 theme-border">
               </div>
               
+              <!-- Staff Verification Field -->
               <div class="border-t border-emerald-950/50 pt-2 space-y-1">
                 <span class="text-[8px] text-emerald-400 font-semibold uppercase theme-text">Staff Token Access</span>
                 <div class="flex gap-1.5">
@@ -396,7 +396,7 @@
       </div>
 
       <!-- CENTER DETAIL: Advanced Admin Console -->
-      <div id="detail-admin" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-admin" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
@@ -410,6 +410,7 @@
             <span class="text-[8px] text-emerald-500/40 font-mono">Ver 1.4.2</span>
           </div>
 
+          <!-- Tab Navigation for Admin Console -->
           <div class="flex border-b border-emerald-950/50 pb-1.5 mb-2 gap-1 shrink-0">
             <button onclick="switchAdminTab('users')" id="tab-btn-users" class="flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200 theme-bg-glow theme-text">Session Monitor</button>
             <button onclick="switchAdminTab('metrics')" id="tab-btn-metrics" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50">Core Metrics</button>
@@ -448,7 +449,23 @@
               </div>
             </div>
 
-            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left shrink-0 theme-border">
+            <!-- Custom System UI Wallpaper Config Selector -->
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left theme-border">
+              <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1 theme-text"><i data-lucide="palette" class="w-3.5 h-3.5"></i> System Wallpaper Select</h4>
+              <div class="grid grid-cols-3 gap-1">
+                <button onclick="setWallpaper('koenigsegg')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase theme-border">CC850</button>
+                <button onclick="setWallpaper('blackhole')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase theme-border">Cosmic</button>
+                <button onclick="setWallpaper('gradient')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase theme-border">Gradient</button>
+              </div>
+              <div class="relative flex items-center justify-center border border-dashed border-emerald-500/25 rounded-lg py-1.5 bg-emerald-950/5 hover:bg-emerald-950/10 transition-colors mt-1.5">
+                <input type="file" id="custom-wallpaper-input" accept="video/mp4" class="absolute inset-0 opacity-0 cursor-pointer" onchange="uploadCustomWallpaper(event)">
+                <div class="text-[8px] text-emerald-400/80 flex items-center gap-1 theme-text">
+                  <i data-lucide="upload" class="w-3 h-3"></i> Upload Custom MP4 Video
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left theme-border">
               <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1 theme-text"><i data-lucide="shield-check" class="w-3 h-3 text-red-400"></i> Token Inspect Core</h4>
               <div class="flex gap-1.5">
                 <input type="text" id="admin-search-token" placeholder="Paste Profile Token / Hash" class="flex-1 bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[8px] text-emerald-300 placeholder-emerald-800 focus:outline-none theme-border">
@@ -474,7 +491,7 @@
       </div>
 
       <!-- CENTER DETAIL: Advanced System Settings -->
-      <div id="detail-settings" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-settings" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
@@ -554,7 +571,7 @@
     <div class="z-30 flex flex-col justify-between items-center w-12 h-full py-4 rounded-2xl bg-black/50 border border-emerald-950/40 relative">
       <div class="flex flex-col items-center gap-5 w-full">
         <!-- Pulse Star Menu Trigger -->
-        <button onclick="toggleRightMenu('music')" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse">
+        <button onclick="toggleRightMenu()" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text">
           <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
         </button>
         
@@ -777,12 +794,13 @@
       }
     }
 
-    // Toggle Left Menu with 360 spin animation
-    function toggleLeftMenu(type) {
+    // Toggle Left Menu with 360 spin animation & sliding Sidebar Columns
+    function toggleLeftMenu() {
       const panel = document.getElementById("left-sub-panel");
+      const sidebarColumn = document.getElementById("left-sidebar-column");
       const backdrop = document.getElementById("overlay-backdrop");
       
-      if (activeLeftMenu === type) {
+      if (activeLeftMenu) {
         closeLeftMenu();
         return;
       }
@@ -791,18 +809,21 @@
       const activeBtnIcon = document.querySelector("#btn-left-star .roll-icon");
       if (activeBtnIcon) {
         activeBtnIcon.classList.remove('roll-active');
-        // Force reflow to restart animation on mobile
         void activeBtnIcon.offsetWidth;
         activeBtnIcon.classList.add('roll-active');
       }
 
-      activeLeftMenu = type;
+      activeLeftMenu = true;
       closeRightMenu();
 
-      renderLeftPanel(type);
+      renderLeftPanel();
 
       backdrop.classList.remove("hidden");
       setTimeout(() => backdrop.classList.add("opacity-100"), 10);
+
+      // Slide down/fade in the vertical sidebar icons column on demand
+      sidebarColumn.classList.remove("-translate-y-4", "opacity-0", "pointer-events-none");
+      sidebarColumn.classList.add("translate-y-0", "opacity-100", "pointer-events-auto");
 
       panel.classList.remove("translate-x-[-20px]", "opacity-0", "pointer-events-none");
       panel.classList.add("translate-x-0", "opacity-100", "pointer-events-auto");
@@ -812,9 +833,15 @@
     function closeLeftMenu() {
       activeLeftMenu = null;
       const panel = document.getElementById("left-sub-panel");
+      const sidebarColumn = document.getElementById("left-sidebar-column");
+
       panel.classList.add("translate-x-[-20px]", "opacity-0", "pointer-events-none");
       panel.classList.remove("translate-x-0", "opacity-100", "pointer-events-auto");
       
+      // Slide up/fade out the vertical sidebar icons column
+      sidebarColumn.classList.add("-translate-y-4", "opacity-0", "pointer-events-none");
+      sidebarColumn.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
+
       const activeBtnIcon = document.querySelector("#btn-left-star .roll-icon");
       if (activeBtnIcon) activeBtnIcon.classList.remove('roll-active');
       
@@ -822,12 +849,13 @@
       updateActiveButtonStates();
     }
 
-    // Toggle Right Menu with 360 spin animation
-    function toggleRightMenu(type) {
+    // Toggle Right Menu with 360 spin animation & sliding Sidebar Columns
+    function toggleRightMenu() {
       const panel = document.getElementById("right-sub-panel");
+      const sidebarColumn = document.getElementById("right-sidebar-column");
       const backdrop = document.getElementById("overlay-backdrop");
 
-      if (activeRightMenu === type) {
+      if (activeRightMenu) {
         closeRightMenu();
         return;
       }
@@ -840,13 +868,17 @@
         activeBtnIcon.classList.add('roll-active');
       }
 
-      activeRightMenu = type;
+      activeRightMenu = true;
       closeLeftMenu();
 
-      renderRightPanel(type);
+      renderRightPanel();
 
       backdrop.classList.remove("hidden");
       setTimeout(() => backdrop.classList.add("opacity-100"), 10);
+
+      // Slide down/fade in the vertical sidebar icons column on demand
+      sidebarColumn.classList.remove("-translate-y-4", "opacity-0", "pointer-events-none");
+      sidebarColumn.classList.add("translate-y-0", "opacity-100", "pointer-events-auto");
 
       panel.classList.remove("translate-x-[20px]", "opacity-0", "pointer-events-none");
       panel.classList.add("translate-x-0", "opacity-100", "pointer-events-auto");
@@ -856,8 +888,14 @@
     function closeRightMenu() {
       activeRightMenu = null;
       const panel = document.getElementById("right-sub-panel");
+      const sidebarColumn = document.getElementById("right-sidebar-column");
+
       panel.classList.add("translate-x-[20px]", "opacity-0", "pointer-events-none");
       panel.classList.remove("translate-x-0", "opacity-100", "pointer-events-auto");
+
+      // Slide up/fade out the vertical sidebar icons column
+      sidebarColumn.classList.add("-translate-y-4", "opacity-0", "pointer-events-none");
+      sidebarColumn.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
 
       const activeBtnIcon = document.querySelector("#btn-right-star .roll-icon");
       if (activeBtnIcon) activeBtnIcon.classList.remove('roll-active');
@@ -965,8 +1003,17 @@
       // Close sub-menus smoothly first
       const leftPanel = document.getElementById("left-sub-panel");
       const rightPanel = document.getElementById("right-sub-panel");
+      const leftSidebarColumn = document.getElementById("left-sidebar-column");
+      const rightSidebarColumn = document.getElementById("right-sidebar-column");
+
       leftPanel.classList.add("translate-x-[-20px]", "opacity-0", "pointer-events-none");
       rightPanel.classList.add("translate-x-[20px]", "opacity-0", "pointer-events-none");
+
+      // Slide up/fade out the vertical sidebar icon columns
+      leftSidebarColumn.classList.add("-translate-y-4", "opacity-0", "pointer-events-none");
+      leftSidebarColumn.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
+      rightSidebarColumn.classList.add("-translate-y-4", "opacity-0", "pointer-events-none");
+      rightSidebarColumn.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
 
       const sigContainer = document.getElementById("signature-container");
       sigContainer.classList.add("opacity-0", "scale-90", "pointer-events-none");
@@ -994,7 +1041,7 @@
 
         if (activeId) {
           const detail = document.getElementById(activeId);
-          detail.setAttribute('data-parent-menu', (id.startsWith('ai-') || id.startsWith('video-') || id.startsWith('vault-') || id.startsWith('settings-')) ? 'left:'+leftType : 'right:'+rightType);
+          detail.setAttribute('data-parent-menu', (id.startsWith('ai-') || id.startsWith('video-') || id.startsWith('vault-') || id.startsWith('settings-')) ? 'left' : 'right');
           detail.classList.remove("opacity-0", "scale-95", "pointer-events-none");
           detail.classList.add("opacity-100", "scale-100", "pointer-events-auto");
         }
@@ -1023,9 +1070,9 @@
       // Smoothly re-open parent menu
       setTimeout(() => {
         if (type === 'ai' || type === 'video' || type === 'private' || type === 'settings') {
-          toggleLeftMenu('ai');
+          toggleLeftMenu();
         } else {
-          toggleRightMenu('profile');
+          toggleRightMenu();
         }
       }, 150);
     }
@@ -1558,7 +1605,7 @@
               <span class="text-[10px] font-bold text-red-300">★ Developer Mode (Host)</span>
               <span class="text-[7px] bg-red-500/20 text-red-300 px-1 rounded uppercase">Owner</span>
             </div>
-            <p class="text-[8px] text-emerald-500/60">Ping: 1ms | Local Device | System Host</p>
+            <p class="text-[8px] text-emerald-500/60 font-medium">Ping: 1ms | Local Device | System Host</p>
           </div>
           <span class="text-[8px] text-red-400 font-bold uppercase tracking-wider pr-1">UNRESTRICTED</span>
         </div>
