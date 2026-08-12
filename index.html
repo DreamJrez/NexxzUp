@@ -121,7 +121,7 @@
         <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
       </button>
 
-      <!-- Left Vertical Menu Column (Slides down and fades in ONLY when Star is active, Standard z-30) -->
+      <!-- Left Vertical Menu Column (Slides down and fades in ONLY when Star is active, Standard z-40) -->
       <div id="left-sidebar-column" class="flex-1 py-4 rounded-2xl bg-black/50 border border-emerald-950/40 flex flex-col justify-between items-center transition-all duration-300 transform -translate-y-4 opacity-0 pointer-events-none mb-1">
         <div class="flex flex-col items-center gap-5 w-full">
           <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
@@ -206,7 +206,7 @@
         </div>
       </div>
 
-      <!-- CENTER DETAIL: Video Player ( z-30) -->
+      <!-- CENTER DETAIL: Video Player (Standard z-30) -->
       <div id="detail-video" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('video')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -439,6 +439,7 @@
               </div>
             </div>
 
+            <!-- Lockout option -->
             <div class="p-2.5 rounded-lg bg-red-950/10 border border-red-500/20 space-y-2">
               <div class="flex justify-between items-center">
                 <div>
@@ -569,12 +570,12 @@
 
     <!-- RIGHT SIDEBAR CONTAINER -->
     <div class="relative w-12 h-full z-40 flex flex-col justify-start">
-      <!-- Right Star Button (Always visible at the top, Standard z-40) -->
+      <!-- Right Star Button (Always visible at the top, z-40) -->
       <button onclick="toggleRightMenu()" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
         <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
       </button>
 
-      <!-- Right Vertical Menu Column (Slides down and fades in ONLY when Star is active, Standard z-30) -->
+      <!-- Right Vertical Menu Column (Slides down and fades in ONLY when Star is active, Standard z-40) -->
       <div id="right-sidebar-column" class="flex-1 py-4 rounded-2xl bg-black/50 border border-emerald-950/40 flex flex-col justify-between items-center transition-all duration-300 transform -translate-y-4 opacity-0 pointer-events-none mb-1">
         <div class="flex flex-col items-center gap-5 w-full">
           <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
@@ -1566,19 +1567,7 @@
     let currentAdminTab = "users";
     let mockPlayers = [];
 
-    function switchAdminTab(tab) {
-      currentAdminTab = tab;
-      
-      const tabIds = ["users", "metrics", "term"];
-      tabIds.forEach(id => {
-        document.getElementById(`admin-tab-${id}`).classList.add("hidden");
-        document.getElementById(`tab-btn-${id}`).className = "flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50";
-      });
-
-      document.getElementById(`admin-tab-${tab}`).classList.remove("hidden");
-      document.getElementById(`tab-btn-${tab}`).className = "flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200 theme-bg-glow theme-text";
-    }
-
+    // Generator for simulated ecosystem sessions
     function generateMockPlayers() {
       mockPlayers = [
         { id: 1, name: "Nexus_User_09", role: "Member", ping: 48, device: "Mobile", geo: "🇮🇳", status: "Active" },
@@ -1689,7 +1678,7 @@
             triggerAnnouncement(msg);
             if (logs) logs.innerHTML += `<div class="text-emerald-300">[BROADCAST] System notification successfully deployed: "${msg}"</div>`;
           } else {
-            if (logs) logs.innerHTML += `<div class="text-red-400">Error: Missing notification payload. Syntax: /announce [message]</div>`;
+            if (logs) logs.innerHTML += `<div class="text-red-400">Error: Missing syntax. Use: /announce [message]</div>`;
           }
         } else if (primary === "/kick") {
           const target = args[1];
