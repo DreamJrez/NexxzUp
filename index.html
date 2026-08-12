@@ -14,7 +14,7 @@
   <style id="theme-variable-definitions">
     /* Core Neon Glow Palette Variables */
     :root {
-      --theme-primary: 16, 185, 129; /* Emerald */
+      --theme-primary: 16, 185, 129; /* Emerald default */
       --theme-glow: 52, 211, 153;
     }
   </style>
@@ -143,7 +143,7 @@
       </div>
     </div>
 
-    <!-- LEFT EXPANDING SUB-MENU PANEL -->
+    <!-- LEFT EXPANDING SUB-MENU PANEL (Scaled down to w-56 for tighter mobile scaling) -->
     <div id="left-sub-panel" class="absolute left-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-25 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5 theme-text">Left Portal</h3>
@@ -163,13 +163,13 @@
       </div>
 
       <!-- CENTER DETAIL: Music Player -->
-      <div id="detail-music" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-music" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('music')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
           </button>
           <span class="text-[9px] text-emerald-500/50 tracking-wider font-semibold uppercase">Music Player</span>
-          <i data-lucide="music" class="w-3.5 h-3.5 text-emerald-500/60"></i>
+          <i data-lucide="music" class="w-3.5 h-3.5 text-emerald-500/60 text-right"></i>
         </div>
 
         <div id="yt-player-container" class="w-full aspect-video rounded-xl bg-black border border-emerald-500/10 overflow-hidden hidden my-2 shrink-0"></div>
@@ -207,7 +207,7 @@
       </div>
 
       <!-- CENTER DETAIL: Video Player -->
-      <div id="detail-video" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
+      <div id="detail-video" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('video')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -242,7 +242,7 @@
       </div>
 
       <!-- CENTER DETAIL: Private Vault -->
-      <div id="detail-private" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-private" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
           <button onclick="handleDetailBack('private')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -262,7 +262,7 @@
       </div>
 
       <!-- CENTER DETAIL: Gemini AI Chat -->
-      <div id="detail-ai" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-ai" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex flex-col gap-2 pb-2 border-b border-emerald-950/50 shrink-0">
           <div class="flex justify-between items-center">
             <button onclick="handleDetailBack('ai')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -298,7 +298,7 @@
       </div>
 
       <!-- CENTER DETAIL: Social Media -->
-      <div id="detail-social" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-social" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-y-auto">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
             <button onclick="handleDetailBack('social')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -332,7 +332,7 @@
       </div>
 
       <!-- CENTER DETAIL: Profile -->
-      <div id="detail-profile" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-profile" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
             <button onclick="handleDetailBack('profile')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -396,7 +396,7 @@
       </div>
 
       <!-- CENTER DETAIL: Advanced Admin Console -->
-      <div id="detail-admin" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-admin" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
@@ -413,8 +413,8 @@
           <!-- Tab Navigation for Admin Console -->
           <div class="flex border-b border-emerald-950/50 pb-1.5 mb-2 gap-1 shrink-0">
             <button onclick="switchAdminTab('users')" id="tab-btn-users" class="flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200 theme-bg-glow theme-text">Session Monitor</button>
-            <button onclick="switchAdminTab('metrics')" id="tab-btn-metrics" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50">Core Metrics</button>
-            <button onclick="switchAdminTab('term')" id="tab-btn-term" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50">Command Term</button>
+            <button onclick="switchAdminTab('metrics')" id="tab-btn-metrics" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50 font-semibold">Core Metrics</button>
+            <button onclick="switchAdminTab('term')" id="tab-btn-term" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50 font-semibold">Command Term</button>
           </div>
 
           <!-- ADMIN TAB 1: Session Monitor -->
@@ -439,6 +439,7 @@
               </div>
             </div>
 
+            <!-- Lockout option -->
             <div class="p-2.5 rounded-lg bg-red-950/10 border border-red-500/20 space-y-2">
               <div class="flex justify-between items-center">
                 <div>
@@ -491,7 +492,7 @@
       </div>
 
       <!-- CENTER DETAIL: Advanced System Settings -->
-      <div id="detail-settings" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-settings" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
@@ -508,7 +509,7 @@
           <!-- Settings panel body -->
           <div class="flex-1 overflow-y-auto space-y-4 pr-1 text-left">
             
-            <!-- Opacity capacity adjust slider -->
+            <!-- Opacity adjust slider -->
             <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-1.5 theme-border">
               <h4 class="text-[10px] font-bold text-emerald-300 flex items-center justify-between theme-text">
                 <span>Glass Screen Opacity</span>
@@ -557,7 +558,7 @@
     </div>
 
     <!-- RIGHT EXPANDING SUB-MENU PANEL -->
-    <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-20 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
+    <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-25 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <button onclick="closeRightMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
           <i data-lucide="x" class="w-3.5 h-3.5"></i>
@@ -567,32 +568,31 @@
       <div id="right-panel-content" class="flex-1 flex flex-col gap-2 overflow-y-auto pr-1"></div>
     </div>
 
-    <!-- RIGHT SIDEBAR (Media & Socials) -->
-    <div class="z-30 flex flex-col justify-between items-center w-12 h-full py-4 rounded-2xl bg-black/50 border border-emerald-950/40 relative">
-      <div class="flex flex-col items-center gap-5 w-full">
-        <!-- Pulse Star Menu Trigger -->
-        <button onclick="toggleRightMenu()" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text">
-          <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
-        </button>
-        
-        <!-- Right Sidebar Inactive Displays (Menus only open from Star) -->
-        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
-          <i data-lucide="music" class="w-4 h-4"></i>
-          <span class="text-[8px] mt-0.5 font-semibold">Music</span>
-        </div>
+    <!-- RIGHT SIDEBAR CONTAINER -->
+    <div class="relative w-12 h-full z-30 flex flex-col justify-start">
+      <!-- Right Star Button (Always visible at the top) -->
+      <button onclick="toggleRightMenu()" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
+        <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
+      </button>
 
-        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
-          <i data-lucide="share-2" class="w-4 h-4"></i>
-          <span class="text-[8px] mt-0.5 font-semibold">Social</span>
-        </div>
+      <!-- Right Vertical Menu Column (Slides down and fades in ONLY when Star is active) -->
+      <div id="right-sidebar-column" class="flex-1 py-4 rounded-2xl bg-black/50 border border-emerald-950/40 flex flex-col justify-between items-center transition-all duration-300 transform -translate-y-4 opacity-0 pointer-events-none mb-1">
+        <div class="flex flex-col items-center gap-5 w-full">
+          <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+            <i data-lucide="music" class="w-4 h-4"></i>
+            <span class="text-[8px] mt-0.5 font-semibold">Music</span>
+          </div>
 
-        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
-          <i data-lucide="user" class="w-4 h-4"></i>
-          <span class="text-[8px] mt-0.5 font-semibold">Profile</span>
+          <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+            <i data-lucide="share-2" class="w-4 h-4"></i>
+            <span class="text-[8px] mt-0.5 font-semibold">Social</span>
+          </div>
+
+          <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+            <i data-lucide="user" class="w-4 h-4"></i>
+            <span class="text-[8px] mt-0.5 font-semibold">Profile</span>
+          </div>
         </div>
-      </div>
-      
-      <div class="flex flex-col items-center">
         <div class="w-1.5 h-1.5 rounded-full bg-emerald-500/30"></div>
       </div>
     </div>
@@ -754,6 +754,7 @@
       updateProfileDisplay();
     }
 
+    // Encrypt profile data to Base64 token
     function generateProfileToken() {
       const payload = {
         n: profileData.username,
@@ -767,6 +768,7 @@
       alert("Config token generated and copied to clipboard!");
     }
 
+    // Inspect Base64 user token
     function adminLookupProfile() {
       const tokenInput = document.getElementById("admin-search-token").value.trim();
       const output = document.getElementById("admin-inspect-result");
@@ -995,7 +997,7 @@
       `;
     }
 
-    // Handles Option Select: Fixes ReferenceError bug by capturing active states before closing menus
+    // Handles Option Select: Smoothly closes active sub-menus first, then scales detail view open
     function handleOptionSelect(id) {
       const leftType = activeLeftMenu;
       const rightType = activeRightMenu;
