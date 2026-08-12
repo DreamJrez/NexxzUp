@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DreamJr Web Ecosystem</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Neon Script (Mr Dafoe) -->
+  <link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- External CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="overflow-hidden flex items-center justify-center p-0 sm:p-4 select-none">
+
+  <!-- Realtime Server Alert Notification Banner -->
+  <div id="server-announcement-banner" class="fixed top-4 left-4 right-4 z-50 rounded-xl p-3 flex items-center gap-3 transform -translate-y-24 opacity-0 transition-all duration-500">
+    <div class="w-8 h-8 rounded-lg bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400 shrink-0">
+      <i data-lucide="radio" class="w-4.5 h-4.5 animate-pulse"></i>
+    </div>
+    <div class="flex-1 text-left">
+      <p class="text-[9px] text-red-400 font-bold uppercase tracking-wider">Server Broadcast</p>
+      <p id="announcement-text" class="text-[11px] text-emerald-200 font-semibold"></p>
+    </div>
+    <button onclick="dismissAnnouncement()" class="text-emerald-500/50 hover:text-emerald-300 p-1"><i data-lucide="x" class="w-4 h-4"></i></button>
+  </div>
+
+  <!-- Mobile Frame Container -->
+  <div class="relative w-full max-w-md h-container overflow-hidden glass-panel flex justify-between p-3 gap-2 z-20 sm:rounded-[36px]">
+    
+    <!-- Interactive Backdrop Overlay -->
+    <div id="overlay-backdrop" class="absolute inset-0 bg-black/70 z-10 hidden transition-opacity duration-300 opacity-0" onclick="closeAllMenusAndDetails()"></div>
+
+    <!-- LEFT SIDEBAR (Utilities & Vaults) -->
+    <div class="z-30 flex flex-col justify-between items-center w-12 h-full py-4 rounded-2xl bg-black/50 border border-emerald-950/40 relative">
+      <div class="flex flex-col items-center gap-5 w-full">
+        <div class="w-7 h-7 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400">
+          <i data-lucide="leaf" class="w-4 h-4"></i>
+        </div>
+        
+        <!-- Left Menu Buttons -->
+        <button onclick="toggleLeftMenu('ai')" id="btn-left-ai" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
+          <i data-lucide="bot" class="w-4 h-4"></i>
+          <span class="text-[8px] mt-0.5 font-semibold">AI</span>
+        </button>
+
+        <button onclick="toggleLeftMenu('video')" id="btn-left-video" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
+          <i data-lucide="clapperboard" class="w-4 h-4"></i>
+          <span class="text-[8px] mt-0.5 font-semibold">Video</span>
+        </button>
+
+        <button onclick="toggleLeftMenu('private')" id="btn-left-private" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
+          <i data-lucide="lock" class="w-4 h-4"></i>
+          <span class="text-[8px] mt-0.5 font-semibold">Private</span>
+        </button>
+      </div>
+      
+      <div class="flex flex-col items-center">
+        <div class="w-1 h-1 rounded-full bg-emerald-500/40"></div>
+      </div>
+    </div>
+
+    <!-- LEFT EXPANDING SUB-MENU PANEL -->
+    <div id="left-sub-panel" class="absolute left-16 right-2 top-2 bottom-2 solid-menu-panel rounded-2xl z-20 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-4 flex flex-col">
+      <div class="flex items-center justify-between border-b border-emerald-950/50 pb-3 mb-3 shrink-0">
+        <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5"></h3>
+        <button onclick="closeLeftMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div id="left-panel-content" class="flex-1 flex flex-col gap-2.5 overflow-y-auto pr-1"></div>
+    </div>
+
+    <!-- CENTER AREA -->
+    <div class="flex-1 flex flex-col justify-center items-center relative px-1 z-15 overflow-hidden">
+      
+      <!-- DEFAULT CENTER: Neon Signature -->
+      <div id="signature-container" class="transition-all duration-500 flex flex-col items-center select-none text-center">
+        <h1 class="signature text-4xl sm:text-5xl tracking-widest leading-none">DreamJr</h1>
+      </div>
+
+      <!-- CENTER DETAIL: Music Player -->
+      <div id="detail-music" class="absolute top-2 bottom-2 left-14 right-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+        <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
+          <button onclick="closeAllDetails()" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+            <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
+          </button>
+          <span class="text-[9px] text-emerald-500/50 tracking-wider font-semibold uppercase">Music Player</span>
+          <i data-lucide="music" class="w-3.5 h-3.5 text-emerald-500/60"></i>
+        </div>
+
+        <!-- Video / Stream Preview Box -->
+        <div id="yt-player-container" class="w-full aspect-video rounded-xl bg-black/40 border border-emerald-500/10 overflow-hidden hidden my-2 shrink-0"></div>
+
+        <div id="audio-artwork-box" class="relative w-full h-24 rounded-xl overflow-hidden my-2 border border-emerald-500/10 flex items-center justify-center bg-gradient-to-tr from-emerald-950/40 via-teal-950/30 to-black shrink-0">
+          <div class="absolute w-20 h-20 bg-emerald-500/10 blur-[20px] animate-pulse"></div>
+          <i data-lucide="music" class="w-8 h-8 text-emerald-400/30 relative z-10"></i>
+          <span id="now-playing-title" class="absolute bottom-2 left-3 right-3 text-[10px] text-emerald-300 font-medium truncate text-left">No media loaded</span>
+        </div>
+
+        <!-- Music Picker & YT link inputs -->
+        <div class="space-y-1.5 mb-2 shrink-0">
+          <div class="flex items-center gap-1.5 bg-black/35 border border-emerald-500/10 p-1 rounded-lg">
+            <i data-lucide="youtube" class="w-3.5 h-3.5 text-emerald-500/60 ml-1"></i>
+            <input type="text" id="yt-music-url" placeholder="Paste YouTube Link" class="bg-transparent text-emerald-300 text-[10px] flex-1 focus:outline-none">
+            <button onclick="loadYTMusic()" class="text-[8px] bg-emerald-500/20 text-emerald-300 px-1.5 py-1 rounded font-bold uppercase shrink-0">Load</button>
+          </div>
+          
+          <div class="relative flex items-center justify-center border border-dashed border-emerald-500/20 rounded-lg py-1.5 bg-emerald-950/5 hover:bg-emerald-950/10 transition-colors">
+            <input type="file" id="local-audio-input" accept="audio/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="loadLocalAudio(event)">
+            <div class="text-[9px] text-emerald-400/80 flex items-center gap-1.5">
+              <i data-lucide="upload" class="w-3 h-3"></i> Upload Audio File
+            </div>
+          </div>
+        </div>
+
+        <audio id="main-audio-player" class="hidden"></audio>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-4 py-1.5 border-t border-emerald-950/50 shrink-0">
+          <button class="text-emerald-500/60" onclick="resetPlayer()"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
+          <button id="player-play-btn" onclick="toggleAudioPlayback()" class="w-10 h-10 rounded-full glow-capsule flex items-center justify-center text-emerald-300">
+            <i data-lucide="play" class="w-4 h-4 ml-0.5"></i>
+          </button>
+          <span id="player-time-display" class="text-[9px] text-emerald-500/70 font-mono">0:00</span>
+        </div>
+      </div>
+
+      <!-- CENTER DETAIL: Video Player -->
+      <div id="detail-video" class="absolute top-2 bottom-2 left-14 right-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+        <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
+          <button onclick="closeAllDetails()" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+            <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
+          </button>
+          <span class="text-[9px] text-emerald-500/50 tracking-wider font-semibold uppercase">Video Player</span>
+          <i data-lucide="video" class="w-3.5 h-3.5 text-emerald-500/60"></i>
+        </div>
+
+        <!-- Video output target -->
+        <div id="video-display-box" class="w-full aspect-video rounded-xl bg-black border border-emerald-500/10 overflow-hidden my-3 flex items-center justify-center relative shrink-0">
+          <video id="custom-video-element" class="w-full h-full object-contain hidden" controls></video>
+          <div id="yt-video-target" class="w-full h-full hidden"></div>
+          <div id="video-placeholder" class="text-emerald-500/40 text-[10px] flex flex-col items-center gap-1.5 absolute">
+            <i data-lucide="clapperboard" class="w-8 h-8 opacity-40 animate-pulse"></i>
+            No source loaded
+          </div>
+        </div>
+
+        <!-- Video Inputs -->
+        <div class="space-y-1.5 mb-2 shrink-0">
+          <div class="flex items-center gap-1.5 bg-black/35 border border-emerald-500/10 p-1 rounded-lg">
+            <i data-lucide="youtube" class="w-3.5 h-3.5 text-emerald-500/60 ml-1"></i>
+            <input type="text" id="video-url-input" placeholder="YouTube or Direct Video URL" class="bg-transparent text-emerald-300 text-[10px] flex-1 focus:outline-none">
+            <button onclick="loadVideoFromInput()" class="text-[8px] bg-emerald-500/20 text-emerald-300 px-1.5 py-1 rounded font-bold uppercase shrink-0">Load</button>
+          </div>
+          
+          <div class="relative flex items-center justify-center border border-dashed border-emerald-500/20 rounded-lg py-1.5 bg-emerald-950/5 hover:bg-emerald-950/10 transition-colors">
+            <input type="file" id="local-video-input" accept="video/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="loadLocalVideo(event)">
+            <div class="text-[9px] text-emerald-400/80 flex items-center gap-1.5">
+              <i data-lucide="upload" class="w-3 h-3"></i> Upload Local Video File
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER DETAIL: Private Vault -->
+      <div id="detail-private" class="absolute top-2 bottom-2 left-14 right-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+        <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
+          <button onclick="closeAllDetails()" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+            <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
+          </button>
+          <span class="text-[9px] text-emerald-500/50 tracking-wider font-semibold uppercase">Private Vault</span>
+          <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-500/60"></i>
+        </div>
+
+        <!-- File Upload to Vault -->
+        <div class="relative flex items-center justify-center border border-dashed border-emerald-500/20 rounded-lg py-1.5 bg-emerald-950/5 hover:bg-emerald-950/10 transition-colors my-2 shrink-0">
+          <input type="file" id="vault-file-input" accept="image/*,video/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="uploadToVault(event)">
+          <div class="text-[9px] text-emerald-400/80 flex items-center gap-1.5">
+            <i data-lucide="file-plus" class="w-3 h-3"></i> Upload Image / Video to Sandbox
+          </div>
+        </div>
+
+        <!-- Vault Gallery List -->
+        <div id="vault-media-list" class="flex-1 overflow-y-auto space-y-2 pr-1 my-1"></div>
+      </div>
+
+      <!-- CENTER DETAIL: Gemini AI Chat -->
+      <div id="detail-ai" class="absolute top-2 bottom-2 left-14 right-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+        <div class="flex flex-col gap-2 pb-2 border-b border-emerald-950/50 shrink-0">
+          <div class="flex justify-between items-center">
+            <button onclick="closeAllDetails()" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+              <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
+            </button>
+            
+            <div class="flex items-center gap-1">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span class="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider">Gemini AI</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1 bg-black/30 p-1 rounded-lg border border-emerald-500/10">
+            <input type="password" id="gemini-key-input" placeholder="Paste Gemini API Key" class="bg-transparent text-emerald-300 text-[10px] rounded px-2 py-1 flex-1 focus:outline-none placeholder-emerald-800">
+            <button onclick="saveApiKey()" class="text-[8px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded font-bold uppercase">
+              Save
+            </button>
+          </div>
+        </div>
+
+        <!-- Message History -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto space-y-2.5 my-2 pr-1 text-[10px] text-emerald-200 text-left">
+          <div class="text-center text-emerald-500/40 text-[9px] my-1 leading-normal">
+            Provide your API Key to enable responses.
+          </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="flex gap-1.5 items-center shrink-0">
+          <input type="text" id="chat-input" placeholder="Ask Gemini..." onkeydown="handleChatSubmit(event)" class="flex-1 bg-black/40 border border-emerald-500/20 text-emerald-200 placeholder-emerald-700/80 text-[11px] rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500/40">
+          <button onclick="sendChatMessage()" class="w-8 h-8 rounded-xl glow-capsule flex items-center justify-center text-emerald-300 shrink-0">
+            <i data-lucide="send-horizontal" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- CENTER DETAIL: Social Media -->
+      <div id="detail-social" class="absolute top-2 bottom-2 left-14 right-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+        <div class="w-full h-full flex flex-col justify-between overflow-y-auto">
+          <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
+            <button onclick="closeAllDetails()" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+              <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
+            </button>
+            <span class="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider">Social Hub</span>
+            <i data-lucide="share-2" class="w-3.5 h-3.5 text-emerald-500/60"></i>
+          </div>
+
+          <!-- Discord Webhook Box -->
+          <div class="mt-3 p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/15 space-y-2 text-left shrink-0">
+            <div class="flex items-center justify-between">
+              <h4 class="text-[11px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="send" class="w-3 h-3 text-indigo-400"></i> Discord Webhook</h4>
+              <span class="text-[8px] text-emerald-500/50 uppercase font-bold">Config</span>
+            </div>
+            <input type="text" id="dc-webhook-url" placeholder="Paste Discord Webhook URL" class="w-full bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-300 placeholder-emerald-800 focus:outline-none">
+            <textarea id="dc-webhook-msg" placeholder="Type message to post on your Discord server..." rows="2" class="w-full bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-200 placeholder-emerald-800 focus:outline-none resize-none"></textarea>
+            <button onclick="sendDiscordWebhook()" class="w-full py-1.5 bg-emerald-500/20 text-emerald-300 text-[9px] font-bold rounded-lg border border-emerald-500/30 uppercase tracking-wide">Publish to Server</button>
+          </div>
+
+          <!-- Interactive Discord Widget Panel -->
+          <div class="mt-3 p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/15 space-y-2 text-left shrink-0">
+            <h4 class="text-[11px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="users" class="w-3 h-3 text-indigo-400"></i> Discord Status</h4>
+            <div class="flex gap-1.5">
+              <input type="text" id="dc-server-id" placeholder="Enter Discord Server ID" class="flex-1 bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-300 placeholder-emerald-800 focus:outline-none">
+              <button onclick="renderDiscordWidget()" class="bg-emerald-500/20 text-emerald-300 text-[9px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30">Sync</button>
+            </div>
+            <div id="discord-widget-frame" class="w-full h-32 rounded bg-black/40 border border-emerald-500/10 overflow-hidden flex items-center justify-center">
+              <span class="text-[8px] text-emerald-500/40">Enter ID to view active members</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER DETAIL: Profile -->
+      <div id="detail-profile" class="absolute top-2 bottom-2 left-14 right-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+        <div class="w-full h-full flex flex-col justify-between overflow-hidden">
+          <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
+            <button onclick="closeAllDetails()" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+              <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
+            </button>
+            <span class="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider">Profile Card</span>
+            <span id="role-tag" class="bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase">Member</span>
+          </div>
+
+          <!-- Profile Scrollable Card Wrapper -->
+          <div class="flex-1 overflow-y-auto space-y-3.5 pr-1">
+            
+            <!-- Profile Info Display -->
+            <div class="flex items-center gap-3 p-2 bg-emerald-950/15 rounded-xl border border-emerald-500/10 text-left">
+              <div class="relative">
+                <img id="profile-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%2310b981' opacity='0.1'/><text x='50%' y='60%' font-size='40' font-family='sans-serif' text-anchor='middle' fill='%2334d399'>U</text></svg>" class="w-12 h-12 rounded-full border-2 border-emerald-500/30 object-cover">
+                <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-slate-950 rounded-full animate-ping"></span>
+                <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-slate-950 rounded-full"></span>
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <h4 id="display-name" class="text-xs font-bold text-emerald-100">Anonymous</h4>
+                  <span id="role-text" class="text-[8px] text-emerald-400 font-semibold bg-emerald-500/10 px-1 py-0.2 rounded">Member</span>
+                </div>
+                <p id="display-bio" class="text-[9px] text-emerald-500/70 italic mt-0.5">Accessing ecosystem...</p>
+                <div class="text-[8px] text-emerald-400/80 font-semibold flex items-center gap-1 mt-1 bg-black/20 px-1.5 py-0.5 rounded-full w-max">
+                  <i data-lucide="clock" class="w-2.5 h-2.5"></i>
+                  <span id="session-timer">00:00:00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Edit Profile Panel -->
+            <div class="space-y-2.5 p-2.5 bg-emerald-950/5 border border-emerald-500/10 rounded-xl text-left">
+              <div class="flex justify-between items-center pb-1 border-b border-emerald-950/50">
+                <span class="text-[9px] text-emerald-300 font-bold uppercase">Customize Card</span>
+                <button onclick="generateProfileToken()" class="text-[8px] bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 px-1.5 py-0.5 rounded font-bold uppercase">Copy Token</button>
+              </div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <input type="text" id="input-username" placeholder="Name" class="bg-black/30 border border-emerald-500/10 text-[9px] text-emerald-300 rounded p-1 focus:outline-none">
+                <input type="text" id="input-bio" placeholder="Short Bio" class="bg-black/30 border border-emerald-500/10 text-[9px] text-emerald-300 rounded p-1 focus:outline-none">
+              </div>
+              <div class="grid grid-cols-3 gap-1">
+                <span class="text-[8px] text-emerald-500/50 flex items-center px-1">Role controlled via token below:</span>
+                <input type="text" id="input-pfp" placeholder="Avatar URL" class="bg-black/30 border border-emerald-500/10 text-[8px] text-emerald-300 rounded p-1 focus:outline-none col-span-2">
+              </div>
+              
+              <!-- Staff Verification Field -->
+              <div class="border-t border-emerald-950/50 pt-2 space-y-1">
+                <span class="text-[8px] text-emerald-400 font-semibold uppercase">Staff Token Access</span>
+                <div class="flex gap-1.5">
+                  <input type="password" id="input-staff-key" placeholder="Enter Staff Verification Key" class="flex-1 bg-black/40 border border-emerald-500/10 text-[8px] text-emerald-300 rounded p-1 focus:outline-none placeholder-emerald-800">
+                  <button onclick="verifyStaffToken()" class="bg-emerald-500/20 text-emerald-300 text-[8px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30">Unlock</button>
+                </div>
+              </div>
+
+              <button onclick="saveUserProfile()" class="w-full py-1.5 bg-emerald-500/20 text-emerald-300 text-[9px] font-bold rounded-lg border border-emerald-500/30 uppercase">Save Profile</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER DETAIL: Advanced Admin Console -->
+      <div id="detail-admin" class="absolute top-2 bottom-2 left-14 right-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+        <div class="w-full h-full flex flex-col justify-between overflow-hidden">
+          
+          <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
+            <button onclick="closeAllDetails()" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+              <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
+            </button>
+            <div class="flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              <span class="text-[9px] text-red-400 font-bold uppercase tracking-wider">Dev Admin Core</span>
+            </div>
+            <span class="text-[8px] text-emerald-500/40 font-mono">Ver 1.4.2</span>
+          </div>
+
+          <!-- Tab Navigation for Admin Console -->
+          <div class="flex border-b border-emerald-950/50 pb-1.5 mb-2 gap-1 shrink-0">
+            <button onclick="switchAdminTab('users')" id="tab-btn-users" class="flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200">Session Monitor</button>
+            <button onclick="switchAdminTab('metrics')" id="tab-btn-metrics" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50">Core Metrics</button>
+            <button onclick="switchAdminTab('term')" id="tab-btn-term" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50">Command Term</button>
+          </div>
+
+          <!-- ADMIN TAB 1: Session Monitor -->
+          <div id="admin-tab-users" class="flex-1 flex flex-col overflow-hidden">
+            <div class="flex justify-between text-[8px] text-emerald-500/50 uppercase font-semibold pb-1.5 border-b border-emerald-950/30">
+              <span>Connected Users</span>
+              <span>Action Control</span>
+            </div>
+            <div id="admin-users-list" class="flex-1 overflow-y-auto space-y-1.5 py-1.5 pr-1"></div>
+          </div>
+
+          <!-- ADMIN TAB 2: Core Metrics & Maintenance Settings -->
+          <div id="admin-tab-metrics" class="flex-1 overflow-y-auto space-y-3.5 hidden text-left">
+            <div class="grid grid-cols-2 gap-2">
+              <div class="bg-black/40 border border-emerald-500/10 p-2 rounded-lg">
+                <span class="text-[8px] text-emerald-500/50 block uppercase">API Bandwidth</span>
+                <span id="metric-bandwidth" class="text-xs font-mono font-bold text-emerald-300">42.8 KB/s</span>
+              </div>
+              <div class="bg-black/40 border border-emerald-500/10 p-2 rounded-lg">
+                <span class="text-[8px] text-emerald-500/50 block uppercase">Gateway Ping</span>
+                <span id="metric-ping" class="text-xs font-mono font-bold text-emerald-300">38 ms</span>
+              </div>
+            </div>
+
+            <!-- Maintenance Switches -->
+            <div class="p-2.5 rounded-lg bg-red-950/10 border border-red-500/20 space-y-2">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="text-[10px] font-bold text-red-400 uppercase">Emergency Protocol</h4>
+                  <p class="text-[8px] text-emerald-500/60">Simulate global maintenance lockout</p>
+                </div>
+                <input type="checkbox" id="maintenance-toggle" onchange="toggleLockoutSimulator()" class="w-4 h-4 accent-red-500 rounded cursor-pointer">
+              </div>
+            </div>
+
+            <!-- Inspect/Token Input Panel -->
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left shrink-0">
+              <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3 text-red-400"></i> Token Inspect Core</h4>
+              <div class="flex gap-1.5">
+                <input type="text" id="admin-search-token" placeholder="Paste Profile Token / Hash" class="flex-1 bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[8px] text-emerald-300 placeholder-emerald-800 focus:outline-none">
+                <button onclick="adminLookupProfile()" class="bg-emerald-500/20 text-emerald-300 text-[8px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30">Inspect</button>
+              </div>
+              <div id="admin-inspect-result" class="hidden p-2 bg-emerald-950/20 rounded border border-emerald-500/10 text-[9px] text-emerald-300 space-y-1"></div>
+            </div>
+          </div>
+
+          <!-- ADMIN TAB 3: Command Terminal -->
+          <div id="admin-tab-term" class="flex-1 flex flex-col overflow-hidden hidden">
+            <!-- Simulated Logs Terminal Output -->
+            <div id="terminal-logs" class="flex-1 bg-black/80 border border-emerald-500/15 rounded-lg p-2 font-mono text-[9px] text-emerald-400 space-y-1 overflow-y-auto text-left">
+              <div>[SYSTEM] Developer Console verified and fully operational.</div>
+              <div>[SYSTEM] Type /help to query system parameters.</div>
+            </div>
+            <!-- Terminal Input -->
+            <div class="flex gap-1 mt-2 shrink-0">
+              <span class="text-red-400 font-mono text-xs self-center">></span>
+              <input type="text" id="terminal-input" placeholder="Enter server command..." onkeydown="handleTerminalSubmit(event)" class="flex-1 bg-black/60 border border-emerald-500/20 rounded px-2 py-1 font-mono text-[10px] text-emerald-200 focus:outline-none">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT EXPANDING SUB-MENU PANEL -->
+    <div id="right-sub-panel" class="absolute right-16 left-3 top-3 bottom-3 solid-menu-panel rounded-2xl z-20 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-4 flex flex-col">
+      <div class="flex items-center justify-between border-b border-emerald-950/50 pb-3 mb-3">
+        <button onclick="closeRightMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <h3 id="right-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5"></h3>
+      </div>
+      <div id="right-panel-content" class="flex-1 flex flex-col gap-2.5 overflow-y-auto pr-1"></div>
+    </div>
+
+    <!-- RIGHT SIDEBAR (Media & Socials) -->
+    <div class="z-30 flex flex-col justify-between items-center w-12 h-full py-4 rounded-2xl bg-black/50 border border-emerald-950/40 relative">
+      <div class="flex flex-col items-center gap-5 w-full">
+        <div class="w-7 h-7 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400">
+          <i data-lucide="leaf" class="w-4 h-4"></i>
+        </div>
+        
+        <!-- Right Menu Buttons -->
+        <button onclick="toggleRightMenu('music')" id="btn-right-music" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
+          <i data-lucide="music" class="w-4 h-4"></i>
+          <span class="text-[8px] mt-0.5 font-semibold">Music</span>
+        </button>
+
+        <button onclick="toggleRightMenu('social')" id="btn-right-social" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
+          <i data-lucide="share-2" class="w-4 h-4"></i>
+          <span class="text-[8px] mt-0.5 font-semibold">Social</span>
+        </button>
+
+        <button onclick="toggleRightMenu('profile')" id="btn-right-profile" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
+          <i data-lucide="user" class="w-4 h-4"></i>
+          <span class="text-[8px] mt-0.5 font-semibold">Profile</span>
+        </button>
+      </div>
+      
+      <div class="flex flex-col items-center">
+        <div class="w-1 h-1 rounded-full bg-emerald-500/40"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- External Script Source File -->
+  <script src="app.js" defer></script>
+</body>
+</html>
