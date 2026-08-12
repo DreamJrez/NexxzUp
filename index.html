@@ -163,7 +163,7 @@
       </div>
 
       <!-- CENTER DETAIL: Music Player -->
-      <div id="detail-music" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-music" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('music')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -207,7 +207,7 @@
       </div>
 
       <!-- CENTER DETAIL: Video Player -->
-      <div id="detail-video" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
+      <div id="detail-video" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('video')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -242,7 +242,7 @@
       </div>
 
       <!-- CENTER DETAIL: Private Vault -->
-      <div id="detail-private" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-private" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
           <button onclick="handleDetailBack('private')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -262,7 +262,7 @@
       </div>
 
       <!-- CENTER DETAIL: Gemini AI Chat -->
-      <div id="detail-ai" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-ai" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex flex-col gap-2 pb-2 border-b border-emerald-950/50 shrink-0">
           <div class="flex justify-between items-center">
             <button onclick="handleDetailBack('ai')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -277,7 +277,7 @@
 
           <div class="flex items-center gap-1 bg-black/30 p-1 rounded-lg border border-emerald-500/10 theme-border">
             <input type="password" id="gemini-key-input" placeholder="Paste Gemini API Key" class="bg-transparent text-emerald-300 text-[10px] rounded px-2 py-1 flex-1 focus:outline-none placeholder-emerald-800">
-            <button onclick="saveApiKey()" class="text-[8px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded font-bold uppercase theme-text theme-bg-glow">
+            <button onclick="saveApiKey()" class="text-[8px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded font-bold uppercase theme-text theme-bg-glow theme-border-glow">
               Save
             </button>
           </div>
@@ -298,7 +298,7 @@
       </div>
 
       <!-- CENTER DETAIL: Social Media -->
-      <div id="detail-social" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-social" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-y-auto">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
             <button onclick="handleDetailBack('social')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -332,7 +332,7 @@
       </div>
 
       <!-- CENTER DETAIL: Profile -->
-      <div id="detail-profile" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-profile" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
             <button onclick="handleDetailBack('profile')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -396,7 +396,7 @@
       </div>
 
       <!-- CENTER DETAIL: Advanced Admin Console -->
-      <div id="detail-admin" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <div id="detail-admin" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
@@ -423,7 +423,7 @@
               <span>Connected Users</span>
               <span>Action Control</span>
             </div>
-            <div id="admin-users-list" class="flex-1 overflow-y-auto space-y-1.5 py-1.5 pr-1"></div>
+            <div id="admin-users-list" class="flex-1 overflow-y-auto space-y-1.5 py-1.5 pr-1 text-left"></div>
           </div>
 
           <!-- ADMIN TAB 2: Core Metrics -->
@@ -439,7 +439,6 @@
               </div>
             </div>
 
-            <!-- Lockout option -->
             <div class="p-2.5 rounded-lg bg-red-950/10 border border-red-500/20 space-y-2">
               <div class="flex justify-between items-center">
                 <div>
@@ -906,6 +905,8 @@
       updateActiveButtonStates();
     }
 
+    let backdropTimeout = null;
+
     function checkDismissBackdrop() {
       const isAnyDetailOpen = ["detail-music", "detail-video", "detail-private", "detail-ai", "detail-social", "detail-profile", "detail-admin", "detail-settings"].some(id => {
         const el = document.getElementById(id);
@@ -915,7 +916,13 @@
       if (!activeLeftMenu && !activeRightMenu && !isAnyDetailOpen) {
         const backdrop = document.getElementById("overlay-backdrop");
         backdrop.classList.remove("opacity-100");
-        setTimeout(() => backdrop.classList.add("hidden"), 300);
+        
+        // Clear any previous timer to prevent race conditions on fast toggling
+        if (backdropTimeout) clearTimeout(backdropTimeout);
+        
+        backdropTimeout = setTimeout(() => {
+          backdrop.classList.add("hidden");
+        }, 300);
       }
     }
 
@@ -997,40 +1004,36 @@
       `;
     }
 
-    // Handles Option Select: Smoothly closes active sub-menus first, then scales detail view open
+    // Handles Option Select: Safely triggers modular closing routines to avoid manual class conflicts
     function handleOptionSelect(id) {
       const leftType = activeLeftMenu;
       const rightType = activeRightMenu;
 
-      // Close sub-menus smoothly first
-      const leftPanel = document.getElementById("left-sub-panel");
-      const rightPanel = document.getElementById("right-sub-panel");
-      const leftSidebarColumn = document.getElementById("left-sidebar-column");
-      const rightSidebarColumn = document.getElementById("right-sidebar-column");
-
-      leftPanel.classList.add("translate-x-[-20px]", "opacity-0", "pointer-events-none");
-      rightPanel.classList.add("translate-x-[20px]", "opacity-0", "pointer-events-none");
-
-      // Slide up/fade out the vertical sidebar icon columns
-      leftSidebarColumn.classList.add("-translate-y-4", "opacity-0", "pointer-events-none");
-      leftSidebarColumn.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
-      rightSidebarColumn.classList.add("-translate-y-4", "opacity-0", "pointer-events-none");
-      rightSidebarColumn.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
+      // 1. Call built-in closing routines to completely reset classlists and remove overlaps
+      closeLeftMenu();
+      closeRightMenu();
 
       const sigContainer = document.getElementById("signature-container");
-      sigContainer.classList.add("opacity-0", "scale-90", "pointer-events-none");
+      if (sigContainer) {
+        sigContainer.classList.add("opacity-0", "scale-90", "pointer-events-none");
+      }
 
       const backdrop = document.getElementById("overlay-backdrop");
-      backdrop.classList.remove("hidden");
-      backdrop.classList.add("opacity-100");
+      if (backdrop) {
+        if (backdropTimeout) clearTimeout(backdropTimeout); // Clear background fade timers
+        backdrop.classList.remove("hidden");
+        backdrop.classList.add("opacity-100");
+      }
 
-      // Delay open slightly to wait for menu slide-close transition (250ms) to complete
+      // Hide all detail screens
+      const detailIds = ["detail-music", "detail-video", "detail-private", "detail-ai", "detail-social", "detail-profile", "detail-admin", "detail-settings"];
+      detailIds.forEach(targetId => {
+        const el = document.getElementById(targetId);
+        if (el) el.classList.add("opacity-0", "scale-95", "pointer-events-none");
+      });
+
+      // 2. Delay open slightly to wait for menu slide-close transition to finish
       setTimeout(() => {
-        // Reset sub-menu state values
-        activeLeftMenu = null;
-        activeRightMenu = null;
-        updateActiveButtonStates();
-
         let activeId = "";
         if (id.startsWith('music-')) activeId = "detail-music";
         else if (id.startsWith('video-')) activeId = "detail-video";
@@ -1043,9 +1046,12 @@
 
         if (activeId) {
           const detail = document.getElementById(activeId);
-          detail.setAttribute('data-parent-menu', (id.startsWith('ai-') || id.startsWith('video-') || id.startsWith('vault-') || id.startsWith('settings-')) ? 'left' : 'right');
-          detail.classList.remove("opacity-0", "scale-95", "pointer-events-none");
-          detail.classList.add("opacity-100", "scale-100", "pointer-events-auto");
+          if (detail) {
+            // Set parent contextual flag
+            detail.setAttribute('data-parent-menu', (id.startsWith('ai-') || id.startsWith('video-') || id.startsWith('vault-') || id.startsWith('settings-')) ? 'left' : 'right');
+            detail.classList.remove("opacity-0", "scale-95", "pointer-events-none");
+            detail.classList.add("opacity-100", "scale-100", "pointer-events-auto");
+          }
         }
       }, 250);
     }
@@ -1321,23 +1327,6 @@
         videoEl.src = url;
         videoEl.play();
       }
-    }
-
-    function loadLocalVideo(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const videoEl = document.getElementById("custom-video-element");
-      const ytTarget = document.getElementById("yt-video-target");
-      const placeholder = document.getElementById("video-placeholder");
-
-      placeholder.classList.add("hidden");
-      ytTarget.classList.add("hidden");
-      ytTarget.innerHTML = "";
-
-      videoEl.classList.remove("hidden");
-      videoEl.src = URL.createObjectURL(file);
-      videoEl.play();
     }
 
     // ==========================================
