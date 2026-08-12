@@ -14,8 +14,8 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #010302;
-      background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.12) 0%, #010302 90%);
+      background-color: #010402;
+      background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.12) 0%, #010403 90%);
       overscroll-behavior: none;
     }
 
@@ -27,7 +27,7 @@
                    0 0 30px rgba(5, 150, 105, 0.4);
     }
 
-    /* Glassmorphic main frame styling */
+    /* Glassmorphic main desktop/device frame */
     .glass-panel {
       background: rgba(3, 10, 7, 0.6);
       backdrop-filter: blur(20px);
@@ -51,7 +51,7 @@
 
     /* Micro-interactions: Smooth rolling rotation */
     .roll-icon {
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .roll-active {
       transform: rotate(360deg);
@@ -77,6 +77,9 @@
 </head>
 <body class="overflow-hidden flex items-center justify-center p-0 sm:p-4 select-none">
 
+  <!-- Interactive, Looping HTML5 Live Background Video Wallpaper -->
+  <video id="bg-video-element" class="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-500 pointer-events-none" autoplay muted loop playsinline src="koenigsegg.mp4" onerror="handleBgVideoError()"></video>
+
   <!-- Server Notification Announcement Banner -->
   <div id="server-announcement-banner" class="fixed top-4 left-4 right-4 z-50 solid-menu-panel rounded-xl p-3 flex items-center gap-3 transform -translate-y-24 opacity-0 transition-all duration-500">
     <div class="w-8 h-8 rounded-lg bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400 shrink-0">
@@ -95,29 +98,29 @@
     <!-- Tap-to-Dismiss Backdrop behind details but above background -->
     <div id="overlay-backdrop" class="absolute inset-0 bg-black/60 z-10 hidden transition-opacity duration-300 opacity-0" onclick="closeAllMenusAndDetails()"></div>
 
-    <!-- LEFT SIDEBAR (Utilities & Vaults) -->
+    <!-- LEFT SIDEBAR -->
     <div class="z-30 flex flex-col justify-between items-center w-12 h-full py-4 rounded-2xl bg-black/50 border border-emerald-950/40 relative">
       <div class="flex flex-col items-center gap-5 w-full">
-        <!-- Pulse Emerald Star style on top left -->
-        <div class="w-7 h-7 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse">
-          <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400"></i>
-        </div>
+        <!-- Pulse Star Menu Trigger -->
+        <button onclick="toggleLeftMenu('ai')" id="btn-left-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse">
+          <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon"></i>
+        </button>
         
-        <!-- Left Sidebar Options -->
-        <button onclick="toggleLeftMenu('ai')" id="btn-left-ai" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
-          <i data-lucide="bot" class="w-4 h-4 roll-icon"></i>
+        <!-- Left Sidebar Inactive Displays (Menus only open from Star) -->
+        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+          <i data-lucide="bot" class="w-4 h-4"></i>
           <span class="text-[8px] mt-0.5 font-semibold">AI</span>
-        </button>
+        </div>
 
-        <button onclick="toggleLeftMenu('video')" id="btn-left-video" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
-          <i data-lucide="clapperboard" class="w-4 h-4 roll-icon"></i>
+        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+          <i data-lucide="clapperboard" class="w-4 h-4"></i>
           <span class="text-[8px] mt-0.5 font-semibold">Video</span>
-        </button>
+        </div>
 
-        <button onclick="toggleLeftMenu('private')" id="btn-left-private" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
-          <i data-lucide="lock" class="w-4 h-4 roll-icon"></i>
+        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+          <i data-lucide="lock" class="w-4 h-4"></i>
           <span class="text-[8px] mt-0.5 font-semibold">Private</span>
-        </button>
+        </div>
       </div>
       
       <div class="flex flex-col items-center">
@@ -125,26 +128,26 @@
       </div>
     </div>
 
-    <!-- LEFT EXPANDING SUB-MENU PANEL -->
-    <div id="left-sub-panel" class="absolute left-16 right-3 top-3 bottom-3 solid-menu-panel rounded-2xl z-20 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-4 flex flex-col">
-      <div class="flex items-center justify-between border-b border-emerald-950/50 pb-3 mb-3 shrink-0">
-        <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5"></h3>
+    <!-- LEFT EXPANDING SUB-MENU PANEL (Scaled down to w-56 for tighter mobile scaling) -->
+    <div id="left-sub-panel" class="absolute left-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-25 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
+      <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
+        <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5">Left Portal</h3>
         <button onclick="closeLeftMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
-          <i data-lucide="x" class="w-4 h-4"></i>
+          <i data-lucide="x" class="w-3.5 h-3.5"></i>
         </button>
       </div>
-      <div id="left-panel-content" class="flex-1 flex flex-col gap-2.5 overflow-y-auto pr-1"></div>
+      <div id="left-panel-content" class="flex-1 flex flex-col gap-2 overflow-y-auto pr-1"></div>
     </div>
 
     <!-- CENTER AREA -->
     <div class="flex-1 flex flex-col justify-center items-center relative px-1 z-15 overflow-hidden">
       
-      <!-- DEFAULT CENTER: Resized Signature -->
+      <!-- DEFAULT CENTER: Neon Signature -->
       <div id="signature-container" class="transition-all duration-500 flex flex-col items-center select-none text-center">
         <h1 class="signature text-4xl sm:text-5xl tracking-widest leading-none">DreamJr</h1>
       </div>
 
-      <!-- CENTER DETAIL: Music Player -->
+      <!-- CENTER DETAIL: Music Player (Adjusted to inset-y-1 inset-x-1 to prevent narrow squished strip) -->
       <div id="detail-music" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('music')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
@@ -154,7 +157,6 @@
           <i data-lucide="music" class="w-3.5 h-3.5 text-emerald-500/60"></i>
         </div>
 
-        <!-- Video Preview Container -->
         <div id="yt-player-container" class="w-full aspect-video rounded-xl bg-black border border-emerald-500/10 overflow-hidden hidden my-2 shrink-0"></div>
 
         <div id="audio-artwork-box" class="relative w-full h-24 rounded-xl overflow-hidden my-2 border border-emerald-500/10 flex items-center justify-center bg-gradient-to-tr from-emerald-950/40 via-teal-950/30 to-black shrink-0">
@@ -180,7 +182,6 @@
 
         <audio id="main-audio-player" class="hidden"></audio>
 
-        <!-- Playback controls -->
         <div class="flex items-center justify-center gap-4 py-1.5 border-t border-emerald-950/50 shrink-0">
           <button class="text-emerald-500/60" onclick="resetPlayer()"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
           <button id="player-play-btn" onclick="toggleAudioPlayback()" class="w-10 h-10 rounded-full glow-capsule flex items-center justify-center text-emerald-300">
@@ -200,8 +201,7 @@
           <i data-lucide="video" class="w-3.5 h-3.5 text-emerald-500/60"></i>
         </div>
 
-        <!-- Video viewport target -->
-        <div id="video-display-box" class="w-full aspect-video rounded-xl bg-black border border-emerald-500/15 overflow-hidden my-2 flex items-center justify-center relative shrink-0">
+        <div id="video-display-box" class="w-full aspect-video rounded-xl bg-black border border-emerald-500/15 overflow-hidden my-3 flex items-center justify-center relative shrink-0">
           <video id="custom-video-element" class="w-full h-full object-contain hidden" controls></video>
           <div id="yt-video-target" class="w-full h-full hidden"></div>
           <div id="video-placeholder" class="text-emerald-500/40 text-[10px] flex flex-col items-center gap-1.5 absolute">
@@ -243,7 +243,6 @@
           </div>
         </div>
 
-        <!-- Gallery elements dynamic target -->
         <div id="vault-media-list" class="flex-1 overflow-y-auto space-y-2 pr-1 my-1"></div>
       </div>
 
@@ -269,7 +268,7 @@
           </div>
         </div>
 
-        <!-- Conversation layout logs -->
+        <!-- Chat history -->
         <div id="chat-messages" class="flex-1 overflow-y-auto space-y-2.5 my-2 pr-1 text-[10px] text-emerald-200 text-left">
           <div class="text-center text-emerald-500/40 text-[9px] my-1 leading-normal">
             Provide your API Key to enable responses.
@@ -295,7 +294,6 @@
             <i data-lucide="share-2" class="w-3.5 h-3.5 text-emerald-500/60"></i>
           </div>
 
-          <!-- Webhook triggers -->
           <div class="mt-3 p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/15 space-y-2 text-left shrink-0">
             <div class="flex items-center justify-between">
               <h4 class="text-[11px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="send" class="w-3 h-3 text-indigo-400"></i> Discord Webhook</h4>
@@ -307,7 +305,7 @@
           </div>
 
           <div class="mt-3 p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/15 space-y-2 text-left shrink-0">
-            <h4 class="text-[11px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="users" class="w-3 h-3 text-indigo-400"></i> Discord Server Status</h4>
+            <h4 class="text-[11px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="users" class="w-3 h-3 text-indigo-400"></i> Discord Status</h4>
             <div class="flex gap-1.5">
               <input type="text" id="dc-server-id" placeholder="Enter Server ID" class="flex-1 bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-300 placeholder-emerald-800 focus:outline-none">
               <button onclick="renderDiscordWidget()" class="bg-emerald-500/20 text-emerald-300 text-[9px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30">Sync</button>
@@ -330,9 +328,10 @@
             <span id="role-tag" class="bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase">Member</span>
           </div>
 
-          <!-- Profile Scrollable Card Contents -->
+          <!-- Profile Scrollable Card Wrapper -->
           <div class="flex-1 overflow-y-auto space-y-3.5 pr-1">
             
+            <!-- Profile Info Display -->
             <div class="flex items-center gap-3 p-2 bg-emerald-950/15 rounded-xl border border-emerald-500/10 text-left">
               <div class="relative">
                 <img id="profile-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%2310b981' opacity='0.1'/><text x='50%' y='60%' font-size='40' font-family='sans-serif' text-anchor='middle' fill='%2334d399'>U</text></svg>" class="w-12 h-12 rounded-full border-2 border-emerald-500/30 object-cover">
@@ -352,7 +351,7 @@
               </div>
             </div>
 
-            <!-- Profile customize settings form -->
+            <!-- Edit Profile Panel -->
             <div class="space-y-2.5 p-2.5 bg-emerald-950/5 border border-emerald-500/10 rounded-xl text-left">
               <div class="flex justify-between items-center pb-1 border-b border-emerald-950/50">
                 <span class="text-[9px] text-emerald-300 font-bold uppercase">Customize Card</span>
@@ -367,6 +366,7 @@
                 <input type="text" id="input-pfp" placeholder="Avatar URL" class="bg-black/30 border border-emerald-500/10 text-[8px] text-emerald-300 rounded p-1 focus:outline-none col-span-2">
               </div>
               
+              <!-- Staff Verification Field -->
               <div class="border-t border-emerald-950/50 pt-2 space-y-1">
                 <span class="text-[8px] text-emerald-400 font-semibold uppercase">Staff Token Access</span>
                 <div class="flex gap-1.5">
@@ -397,6 +397,7 @@
             <span class="text-[8px] text-emerald-500/40 font-mono">Ver 1.4.2</span>
           </div>
 
+          <!-- Tab Navigation for Admin Console -->
           <div class="flex border-b border-emerald-950/50 pb-1.5 mb-2 gap-1 shrink-0">
             <button onclick="switchAdminTab('users')" id="tab-btn-users" class="flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200">Session Monitor</button>
             <button onclick="switchAdminTab('metrics')" id="tab-btn-metrics" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50">Core Metrics</button>
@@ -425,6 +426,7 @@
               </div>
             </div>
 
+            <!-- Lockout switch -->
             <div class="p-2.5 rounded-lg bg-red-950/10 border border-red-500/20 space-y-2">
               <div class="flex justify-between items-center">
                 <div>
@@ -435,7 +437,23 @@
               </div>
             </div>
 
-            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left shrink-0">
+            <!-- Custom System UI Wallpaper Config Selector -->
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left">
+              <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="palette" class="w-3.5 h-3.5"></i> System Wallpaper Select</h4>
+              <div class="grid grid-cols-3 gap-1">
+                <button onclick="setWallpaper('koenigsegg')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase">CC850</button>
+                <button onclick="setWallpaper('blackhole')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase">Cosmic</button>
+                <button onclick="setWallpaper('gradient')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase">Gradient</button>
+              </div>
+              <div class="relative flex items-center justify-center border border-dashed border-emerald-500/25 rounded-lg py-1.5 bg-emerald-950/5 hover:bg-emerald-950/10 transition-colors mt-1.5">
+                <input type="file" id="custom-wallpaper-input" accept="video/mp4" class="absolute inset-0 opacity-0 cursor-pointer" onchange="uploadCustomWallpaper(event)">
+                <div class="text-[8px] text-emerald-400/80 flex items-center gap-1">
+                  <i data-lucide="upload" class="w-3 h-3"></i> Upload Custom MP4 Video
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left">
               <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3 text-red-400"></i> Token Inspect Core</h4>
               <div class="flex gap-1.5">
                 <input type="text" id="admin-search-token" placeholder="Paste Profile Token / Hash" class="flex-1 bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[8px] text-emerald-300 placeholder-emerald-800 focus:outline-none">
@@ -462,40 +480,40 @@
 
     </div>
 
-    <!-- RIGHT EXPANDING SUB-MENU PANEL -->
-    <div id="right-sub-panel" class="absolute right-16 left-3 top-3 bottom-3 solid-menu-panel rounded-2xl z-20 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-4 flex flex-col">
-      <div class="flex items-center justify-between border-b border-emerald-950/50 pb-3 mb-3">
+    <!-- RIGHT EXPANDING SUB-MENU PANEL (Tighter scaling) -->
+    <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-25 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
+      <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5">
         <button onclick="closeRightMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
-          <i data-lucide="x" class="w-4 h-4"></i>
+          <i data-lucide="x" class="w-3.5 h-3.5"></i>
         </button>
-        <h3 id="right-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5"></h3>
+        <h3 id="right-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5">Right Portal</h3>
       </div>
-      <div id="right-panel-content" class="flex-1 flex flex-col gap-2.5 overflow-y-auto pr-1"></div>
+      <div id="right-panel-content" class="flex-1 flex flex-col gap-2 overflow-y-auto pr-1"></div>
     </div>
 
     <!-- RIGHT SIDEBAR (Media & Socials) -->
     <div class="z-30 flex flex-col justify-between items-center w-12 h-full py-4 rounded-2xl bg-black/50 border border-emerald-950/40 relative">
       <div class="flex flex-col items-center gap-5 w-full">
-        <!-- Pulse Emerald Star style on top right -->
-        <div class="w-7 h-7 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse">
-          <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400"></i>
-        </div>
+        <!-- Pulse Star Menu Trigger -->
+        <button onclick="toggleRightMenu('music')" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse">
+          <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon"></i>
+        </button>
         
-        <!-- Right Sidebar Options -->
-        <button onclick="toggleRightMenu('music')" id="btn-right-music" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
-          <i data-lucide="music" class="w-4 h-4 roll-icon"></i>
+        <!-- Right Sidebar Inactive Displays (Menus only open from Star) -->
+        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+          <i data-lucide="music" class="w-4 h-4"></i>
           <span class="text-[8px] mt-0.5 font-semibold">Music</span>
-        </button>
+        </div>
 
-        <button onclick="toggleRightMenu('social')" id="btn-right-social" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
-          <i data-lucide="share-2" class="w-4 h-4 roll-icon"></i>
+        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+          <i data-lucide="share-2" class="w-4 h-4"></i>
           <span class="text-[8px] mt-0.5 font-semibold">Social</span>
-        </button>
+        </div>
 
-        <button onclick="toggleRightMenu('profile')" id="btn-right-profile" class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200">
-          <i data-lucide="user" class="w-4 h-4 roll-icon"></i>
+        <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
+          <i data-lucide="user" class="w-4 h-4"></i>
           <span class="text-[8px] mt-0.5 font-semibold">Profile</span>
-        </button>
+        </div>
       </div>
       
       <div class="flex flex-col items-center">
@@ -518,7 +536,7 @@
     let profileData = {
       username: "Guest User",
       bio: "Accessing DreamJr Space...",
-      role: "Member", 
+      role: "Member", // Default role assigned automatically
       avatar: "",
       joinTimestamp: Date.now()
     };
@@ -540,13 +558,16 @@
 
     // Initial setup on DOM Ready
     document.addEventListener("DOMContentLoaded", () => {
+      // 1. Process Automatic Developer Check via URL Hash bypass
       processAutoDeveloperCheck();
 
+      // 2. API Key recovery
       const savedKey = localStorage.getItem("gemini_api_key");
       if (savedKey) {
         document.getElementById("gemini-key-input").value = savedKey;
       }
       
+      // 3. Load stored custom profile data (or generate default "Member" role on first launch)
       const savedProfile = localStorage.getItem("dreamjr_profile");
       if (savedProfile) {
         profileData = JSON.parse(savedProfile);
@@ -557,8 +578,13 @@
       }
       updateProfileDisplay();
 
+      // 4. Initialize IndexedDB private vault store
       initIndexedDB();
+
+      // 5. Setup simulated FPS staff console users
       generateMockPlayers();
+
+      // 6. Setup telemetry ticks
       setInterval(tickServerMetrics, 2000);
     });
 
@@ -696,7 +722,7 @@
       }
     }
 
-    // Toggle Left Menu
+    // Toggle Left Menu with 360 spin animation
     function toggleLeftMenu(type) {
       const panel = document.getElementById("left-sub-panel");
       const backdrop = document.getElementById("overlay-backdrop");
@@ -707,10 +733,13 @@
       }
 
       // Smooth spin micro-interaction on button trigger
-      let targetBtn = "btn-left-" + type;
-      document.querySelectorAll('.roll-icon').forEach(el => el.classList.remove('roll-active'));
-      const activeBtnIcon = document.querySelector("#" + targetBtn + " .roll-icon");
-      if (activeBtnIcon) activeBtnIcon.classList.add('roll-active');
+      const activeBtnIcon = document.querySelector("#btn-left-star .roll-icon");
+      if (activeBtnIcon) {
+        activeBtnIcon.classList.remove('roll-active');
+        // Force reflow to restart animation on mobile
+        void activeBtnIcon.offsetWidth;
+        activeBtnIcon.classList.add('roll-active');
+      }
 
       activeLeftMenu = type;
       closeRightMenu();
@@ -731,13 +760,14 @@
       panel.classList.add("translate-x-[-20px]", "opacity-0", "pointer-events-none");
       panel.classList.remove("translate-x-0", "opacity-100", "pointer-events-auto");
       
-      document.querySelectorAll('.roll-icon').forEach(el => el.classList.remove('roll-active'));
+      const activeBtnIcon = document.querySelector("#btn-left-star .roll-icon");
+      if (activeBtnIcon) activeBtnIcon.classList.remove('roll-active');
       
       checkDismissBackdrop();
       updateActiveButtonStates();
     }
 
-    // Toggle Right Menu
+    // Toggle Right Menu with 360 spin animation
     function toggleRightMenu(type) {
       const panel = document.getElementById("right-sub-panel");
       const backdrop = document.getElementById("overlay-backdrop");
@@ -748,10 +778,12 @@
       }
 
       // Smooth spin micro-interaction on button trigger
-      let targetBtn = "btn-right-" + type;
-      document.querySelectorAll('.roll-icon').forEach(el => el.classList.remove('roll-active'));
-      const activeBtnIcon = document.querySelector("#" + targetBtn + " .roll-icon");
-      if (activeBtnIcon) activeBtnIcon.classList.add('roll-active');
+      const activeBtnIcon = document.querySelector("#btn-right-star .roll-icon");
+      if (activeBtnIcon) {
+        activeBtnIcon.classList.remove('roll-active');
+        void activeBtnIcon.offsetWidth;
+        activeBtnIcon.classList.add('roll-active');
+      }
 
       activeRightMenu = type;
       closeLeftMenu();
@@ -772,7 +804,8 @@
       panel.classList.add("translate-x-[20px]", "opacity-0", "pointer-events-none");
       panel.classList.remove("translate-x-0", "opacity-100", "pointer-events-auto");
 
-      document.querySelectorAll('.roll-icon').forEach(el => el.classList.remove('roll-active'));
+      const activeBtnIcon = document.querySelector("#btn-right-star .roll-icon");
+      if (activeBtnIcon) activeBtnIcon.classList.remove('roll-active');
 
       checkDismissBackdrop();
       updateActiveButtonStates();
@@ -797,47 +830,36 @@
     }
 
     function updateActiveButtonStates() {
-      const list = [
-        { id: "btn-left-ai", active: activeLeftMenu === 'ai' },
-        { id: "btn-left-video", active: activeLeftMenu === 'video' },
-        { id: "btn-left-private", active: activeLeftMenu === 'private' },
-        { id: "btn-right-music", active: activeRightMenu === 'music' },
-        { id: "btn-right-social", active: activeRightMenu === 'social' },
-        { id: "btn-right-profile", active: activeRightMenu === 'profile' }
-      ];
+      const starLeft = document.getElementById("btn-left-star");
+      const starRight = document.getElementById("btn-right-star");
 
-      list.forEach(item => {
-        const el = document.getElementById(item.id);
-        if (el) {
-          if (item.active) {
-            el.className = "w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-300 glow-capsule transition-all duration-200";
-          } else {
-            el.className = "w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/60 hover:text-emerald-300 transition-all duration-200";
-          }
+      if (starLeft) {
+        if (activeLeftMenu) {
+          starLeft.className = "w-10 h-10 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none";
+        } else {
+          starLeft.className = "w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse";
         }
-      });
+      }
+
+      if (starRight) {
+        if (activeRightMenu) {
+          starRight.className = "w-10 h-10 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none";
+        } else {
+          starRight.className = "w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse";
+        }
+      }
     }
 
     function renderLeftPanel(type) {
       const titleEl = document.getElementById("left-panel-title");
       const contentEl = document.getElementById("left-panel-content");
 
-      if (type === 'ai') {
-        titleEl.innerHTML = `<i data-lucide="bot" class="w-3.5 h-3.5"></i> Intelligent Hub`;
-        contentEl.innerHTML = `
-          ${getMenuItemHtml('ai-launch', 'Gemini Chatbot', 'Conversational Assistant', 'sparkles')}
-        `;
-      } else if (type === 'video') {
-        titleEl.innerHTML = `<i data-lucide="clapperboard" class="w-3.5 h-3.5"></i> Video Player`;
-        contentEl.innerHTML = `
-          ${getMenuItemHtml('video-player', 'Custom Player', 'Stream files or URLs', 'film')}
-        `;
-      } else if (type === 'private') {
-        titleEl.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> Personal Vault`;
-        contentEl.innerHTML = `
-          ${getMenuItemHtml('vault-launch', 'Media Safe', 'Encrypted local sandbox', 'folder-lock')}
-        `;
-      }
+      titleEl.innerHTML = `<i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400"></i> Utilities`;
+      contentEl.innerHTML = `
+        ${getMenuItemHtml('ai-launch', 'Gemini Chatbot', 'Conversational Assistant', 'sparkles')}
+        ${getMenuItemHtml('video-player', 'Custom Player', 'Stream files or URLs', 'film')}
+        ${getMenuItemHtml('vault-launch', 'Media Safe', 'Encrypted local sandbox', 'folder-lock')}
+      `;
       lucide.createIcons();
     }
 
@@ -845,29 +867,19 @@
       const titleEl = document.getElementById("right-panel-title");
       const contentEl = document.getElementById("right-panel-content");
 
-      if (type === 'music') {
-        titleEl.innerHTML = `Music Console <i data-lucide="music" class="w-3.5 h-3.5"></i>`;
-        contentEl.innerHTML = `
-          ${getMenuItemHtml('music-player', 'Music Suite 2.0', 'Local tracks & streams', 'music-4')}
-        `;
-      } else if (type === 'social') {
-        titleEl.innerHTML = `Social Media <i data-lucide="share-2" class="w-3.5 h-3.5"></i>`;
-        contentEl.innerHTML = `
-          ${getMenuItemHtml('social-launch', 'Hook Server', 'Webhook management', 'send')}
-        `;
-      } else if (type === 'profile') {
-        titleEl.innerHTML = `Identity Core <i data-lucide="user" class="w-3.5 h-3.5"></i>`;
-        
-        let extraOptions = "";
-        if (profileData.role === 'Admin' || profileData.role === 'Developer') {
-          extraOptions = `${getMenuItemHtml('admin-launch', 'Admin Console', 'Server & telemetry commands', 'shield-alert')}`;
-        }
-
-        contentEl.innerHTML = `
-          ${getMenuItemHtml('profile-view', 'Personal Identity', 'Edit details & credentials', 'user-cog')}
-          ${extraOptions}
-        `;
+      titleEl.innerHTML = `Ecosystem <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400"></i>`;
+      
+      let extraOptions = "";
+      if (profileData.role === 'Admin' || profileData.role === 'Developer') {
+        extraOptions = `${getMenuItemHtml('admin-launch', 'Admin Console', 'Server & telemetry commands', 'shield-alert')}`;
       }
+
+      contentEl.innerHTML = `
+        ${getMenuItemHtml('music-player', 'Music Player', 'Local tracks & streams', 'music-4')}
+        ${getMenuItemHtml('social-launch', 'Social Hub', 'Webhook management', 'share-2')}
+        ${getMenuItemHtml('profile-view', 'Personal Identity', 'Edit details & credentials', 'user-cog')}
+        ${extraOptions}
+      `;
       lucide.createIcons();
     }
 
@@ -879,8 +891,8 @@
               <i data-lucide="${icon}" class="w-3.5 h-3.5"></i>
             </div>
             <div class="truncate">
-              <p class="text-[11px] font-semibold text-emerald-200">${label}</p>
-              <p class="text-[9px] text-emerald-500/60 truncate">${description}</p>
+              <p class="text-[10px] font-semibold text-emerald-200">${label}</p>
+              <p class="text-[8px] text-emerald-500/60 truncate">${description}</p>
             </div>
           </div>
           <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-500/40 shrink-0"></i>
@@ -888,31 +900,29 @@
       `;
     }
 
-    // Handles Option Select: Animates sub-menu closed smoothly first, then opens the detail view
+    // Handles Option Select: Smoothly closes active sub-menus first, then scales detail view open
     function handleOptionSelect(id) {
-      const activeLeftType = activeLeftMenu;
-      const activeRightType = activeRightMenu;
+      const leftPanel = document.getElementById("left-sub-panel");
+      const rightPanel = document.getElementById("right-sub-panel");
 
-      // Slide close menus smoothly first
-      closeLeftMenu();
-      closeRightMenu();
+      // Slide menus closed smoothly first
+      leftPanel.classList.add("translate-x-[-20px]", "opacity-0", "pointer-events-none");
+      rightPanel.classList.add("translate-x-[20px]", "opacity-0", "pointer-events-none");
 
       const sigContainer = document.getElementById("signature-container");
       sigContainer.classList.add("opacity-0", "scale-90", "pointer-events-none");
 
-      // Hide all detail screens
-      const detailIds = ["detail-music", "detail-video", "detail-private", "detail-ai", "detail-social", "detail-profile", "detail-admin"];
-      detailIds.forEach(targetId => {
-        document.getElementById(targetId).classList.add("opacity-0", "scale-95", "pointer-events-none");
-      });
-
-      // Keep backdrop running
       const backdrop = document.getElementById("overlay-backdrop");
       backdrop.classList.remove("hidden");
       backdrop.classList.add("opacity-100");
 
-      // Delay opening screen slightly to let menu close transition finish
+      // Delay open slightly to wait for menu slide-close transition (250ms) to complete
       setTimeout(() => {
+        // Reset sub-menu states completely in state variables
+        activeLeftMenu = null;
+        activeRightMenu = null;
+        updateActiveButtonStates();
+
         let activeId = "";
         if (id.startsWith('music-')) activeId = "detail-music";
         else if (id.startsWith('video-')) activeId = "detail-video";
@@ -924,7 +934,6 @@
 
         if (activeId) {
           const detail = document.getElementById(activeId);
-          detail.setAttribute('data-parent-menu', id.startsWith('ai-') || id.startsWith('video-') || id.startsWith('vault-') ? 'left:'+activeLeftType : 'right:'+activeRightType);
           detail.classList.remove("opacity-0", "scale-95", "pointer-events-none");
           detail.classList.add("opacity-100", "scale-100", "pointer-events-auto");
         }
@@ -944,25 +953,17 @@
 
       const detailEl = document.getElementById(activeDetailId);
       if (!detailEl) return;
-
-      const parentMeta = detailEl.getAttribute('data-parent-menu') || "";
       
       // Animate detail view closed
       detailEl.classList.add("opacity-0", "scale-95", "pointer-events-none");
       detailEl.classList.remove("opacity-100", "scale-100", "pointer-events-auto");
 
+      // Smoothly re-open parent menu
       setTimeout(() => {
-        if (parentMeta.startsWith('left:')) {
-          const menuType = parentMeta.split(':')[1];
-          if (menuType && menuType !== 'null') toggleLeftMenu(menuType);
-        } else if (parentMeta.startsWith('right:')) {
-          const menuType = parentMeta.split(':')[1];
-          if (menuType && menuType !== 'null') toggleRightMenu(menuType);
+        if (type === 'ai' || type === 'video' || type === 'private') {
+          toggleLeftMenu('ai');
         } else {
-          // Fallback to signature view
-          const sigContainer = document.getElementById("signature-container");
-          sigContainer.classList.remove("opacity-0", "scale-90", "pointer-events-none");
-          checkDismissBackdrop();
+          toggleRightMenu('profile');
         }
       }, 150);
     }
@@ -970,16 +971,69 @@
     function closeAllDetails() {
       const detailIds = ["detail-music", "detail-video", "detail-private", "detail-ai", "detail-social", "detail-profile", "detail-admin"];
       detailIds.forEach(targetId => {
-        document.getElementById(targetId).classList.add("opacity-0", "scale-95", "pointer-events-none");
+        const el = document.getElementById(targetId);
+        if (el) el.classList.add("opacity-0", "scale-95", "pointer-events-none");
       });
 
       const sigContainer = document.getElementById("signature-container");
-      setTimeout(() => {
-        sigContainer.classList.remove("opacity-0", "scale-90", "pointer-events-none");
-      }, 150);
+      if (sigContainer) {
+        setTimeout(() => {
+          sigContainer.classList.remove("opacity-0", "scale-90", "pointer-events-none");
+        }, 150);
+      }
 
       checkDismissBackdrop();
     }
+
+    // ==========================================
+    // MODULE: BACKGROUND VIDEO WALLPAPER SELECTOR
+    // ==========================================
+    function setWallpaper(type) {
+      const bgVideo = document.getElementById("bg-video-element");
+      if (!bgVideo) return;
+
+      if (type === 'koenigsegg') {
+        bgVideo.style.display = "block";
+        bgVideo.src = "koenigsegg.mp4";
+        bgVideo.play();
+      } else if (type === 'blackhole') {
+        bgVideo.style.display = "block";
+        bgVideo.src = "blackhole.mp4";
+        bgVideo.play();
+      } else {
+        // Fallback static gradient
+        bgVideo.pause();
+        bgVideo.style.display = "none";
+      }
+      localStorage.setItem("dreamjr_wallpaper", type);
+    }
+
+    function uploadCustomWallpaper(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const bgVideo = document.getElementById("bg-video-element");
+      if (bgVideo) {
+        bgVideo.style.display = "block";
+        bgVideo.src = URL.createObjectURL(file);
+        bgVideo.play();
+        localStorage.setItem("dreamjr_wallpaper", "custom");
+      }
+    }
+
+    function handleBgVideoError() {
+      console.warn("Wallpaper video file not found. Falling back to static gradient.");
+      const bgVideo = document.getElementById("bg-video-element");
+      if (bgVideo) bgVideo.style.display = "none";
+    }
+
+    // Load saved wallpaper config on init
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedWallpaper = localStorage.getItem("dreamjr_wallpaper");
+      if (savedWallpaper && savedWallpaper !== "custom") {
+        setWallpaper(savedWallpaper);
+      }
+    });
 
     // ==========================================
     // MODULE: MUSIC PLAYER & ROBUST YT PARSING
@@ -1228,8 +1282,16 @@
       `;
     }
 
+    // Recover previous webhook link if saved
+    document.addEventListener("DOMContentLoaded", () => {
+      const cachedWebhook = localStorage.getItem("dreamjr_webhook");
+      if (cachedWebhook) {
+        document.getElementById("dc-webhook-url").value = cachedWebhook;
+      }
+    });
+
     // ==========================================
-    // MODULE: CHAT ASSISTANT
+    // MODULE: CHAT ASSISTANT & SECURE DEBUGS
     // ==========================================
     function saveApiKey() {
       const key = document.getElementById("gemini-key-input").value.trim();
@@ -1267,16 +1329,20 @@
         const data = await response.json();
         document.getElementById(tempId).remove();
 
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
+        // Robust API Diagnostic check: parses actual error payload instead of a silent fail
+        if (data.error) {
+          appendMessage(`API Error: ${data.error.message}`, "system");
+        } else if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
           appendMessage(data.candidates[0].content.parts[0].text, "bot");
         } else {
-          appendMessage("Error parsing context response format.", "system");
+          appendMessage(`Unknown API Response. Raw payload: ${JSON.stringify(data)}`, "system");
         }
       } catch (err) {
         if (document.getElementById(tempId)) {
           document.getElementById(tempId).remove();
         }
-        appendMessage("Failed to reach Gemini gateway.", "system");
+        appendMessage("Network failure. Could not connect to Gemini servers.", "system");
+        console.error(err);
       }
     }
 
