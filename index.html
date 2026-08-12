@@ -23,16 +23,14 @@
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #010402;
-      background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, #010403 90%);
       overscroll-behavior: none;
     }
 
     .signature {
       font-family: 'Mr Dafoe', cursive;
-      color: #d1fae5;
-      text-shadow: 0 0 6px rgba(var(--theme-primary), 0.8), 
-                   0 0 15px rgba(var(--theme-primary), 0.6), 
-                   0 0 30px rgba(var(--theme-primary), 0.4);
+      color: #34d399 !important; /* Fixed glowing emerald-green signature */
+      text-shadow: 0 0 8px rgba(52, 211, 153, 0.9), 
+                   0 0 20px rgba(16, 185, 129, 0.7);
     }
 
     /* Dynamic Theme glow assignments */
@@ -91,7 +89,8 @@
     }
   </style>
 </head>
-<body class="overflow-hidden flex items-center justify-center p-0 sm:p-4 select-none">
+<!-- Restored static viewport settings to body to prevent landscape/portrait collapse -->
+<body class="h-[100dvh] w-screen overflow-hidden flex items-center justify-center p-0 sm:p-4 select-none">
 
   <!-- Interactive, Looping HTML5 Live Background Video Wallpaper -->
   <video id="bg-video-element" class="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-500 pointer-events-none" autoplay muted loop playsinline src="koenigsegg.mp4" onerror="handleBgVideoError()"></video>
@@ -108,17 +107,22 @@
     <button onclick="dismissAnnouncement()" class="text-emerald-500/50 hover:text-emerald-300 p-1"><i data-lucide="x" class="w-4 h-4"></i></button>
   </div>
 
-  <!-- Mobile Frame Container -->
-  <div id="main-container" class="relative w-full max-w-md h-container overflow-hidden glass-panel flex justify-between p-3 gap-2 z-20 sm:rounded-[36px]" style="background: rgba(3, 10, 7, 0.65);">
+  <!-- Mobile Frame Container: Gradient applied directly to prevent black screens -->
+  <div id="main-container" class="relative w-full max-w-md h-container overflow-hidden glass-panel flex justify-between p-3 gap-2 z-20 sm:rounded-[36px]" style="background: radial-gradient(circle at center, rgba(16, 185, 129, 0.18) 0%, rgba(1, 4, 3, 0.97) 100%);">
     
+    <!-- Onboarding Chat Bubble Menu Hint: Automatically vanishes after 5 seconds -->
+    <div id="menu-hint-bubble" class="absolute left-12 top-3 bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 text-[9px] font-bold px-2 py-1 rounded-lg shadow-[0_0_10px_rgba(52,211,153,0.35)] animate-bounce z-50 pointer-events-none transition-all duration-500 opacity-100 flex items-center gap-1">
+      <i data-lucide="info" class="w-3.5 h-3.5 text-emerald-400"></i> Tap to see menu
+    </div>
+
     <!-- Tap-to-Dismiss Backdrop behind details but above background (Standard z-10) -->
     <div id="overlay-backdrop" class="absolute inset-0 bg-black/60 z-10 hidden transition-opacity duration-300 opacity-0" onclick="closeAllMenusAndDetails()"></div>
 
     <!-- LEFT SIDEBAR CONTAINER -->
     <div class="relative w-12 h-full z-40 flex flex-col justify-start">
-      <!-- Left Star Button (Always visible at the top, z-40) -->
-      <button onclick="toggleLeftMenu()" id="btn-left-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
-        <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
+      <!-- Left Star Button (Always visible at the top, z-40, scaled down to w-8 h-8) -->
+      <button onclick="toggleLeftMenu()" id="btn-left-star" class="w-8 h-8 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
+        <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400 roll-icon theme-text"></i>
       </button>
 
       <!-- Left Vertical Menu Column (Slides down and fades in ONLY when Star is active, Standard z-40) -->
@@ -139,11 +143,11 @@
             <span class="text-[8px] mt-0.5 font-semibold">Private</span>
           </div>
         </div>
-        <div class="w-1 h-1 rounded-full bg-emerald-500/40"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-emerald-500/30"></div>
       </div>
     </div>
 
-    <!-- LEFT EXPANDING SUB-MENU PANEL (Scaled down to w-56, Standard z-30) -->
+    <!-- LEFT EXPANDING SUB-MENU PANEL (Standard z-30) -->
     <div id="left-sub-panel" class="absolute left-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-30 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5 theme-text">Left Portal</h3>
@@ -154,7 +158,7 @@
       <div id="left-panel-content" class="flex-1 flex flex-col gap-2 overflow-y-auto pr-1"></div>
     </div>
 
-    <!-- CENTER AREA (Standard z-20 so its contents render ABOVE the backdrop) -->
+    <!-- CENTER AREA (Upgraded to standard z-20 so it renders ABOVE the backdrop) -->
     <div class="flex-1 flex flex-col justify-center items-center relative px-1 z-20 overflow-hidden">
       
       <!-- DEFAULT CENTER: Neon Signature -->
@@ -206,7 +210,7 @@
         </div>
       </div>
 
-      <!-- CENTER DETAIL: Video Player (Standard z-30) -->
+      <!-- CENTER DETAIL: Video Player (z-30) -->
       <div id="detail-video" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('video')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -400,7 +404,8 @@
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
-            <button onclick="handleDetailBack('profile')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
+            <!-- Corrected Admin Panel Back button onclick trigger targeting 'admin' directly -->
+            <button onclick="handleDetailBack('admin')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
               <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
             </button>
             <div class="flex items-center gap-1">
@@ -533,7 +538,7 @@
             </div>
 
             <!-- Wallpaper selector duplicate from Admin Console for easy reach -->
-            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 theme-border">
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left theme-border">
               <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1 theme-text">
                 <i data-lucide="image" class="w-3.5 h-3.5"></i> Background Wallpaper
               </h4>
@@ -557,7 +562,7 @@
 
     </div>
 
-    <!-- RIGHT EXPANDING SUB-MENU PANEL (Standard z-30) -->
+    <!-- RIGHT EXPANDING SUB-MENU PANEL -->
     <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-30 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <button onclick="closeRightMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
@@ -571,8 +576,8 @@
     <!-- RIGHT SIDEBAR CONTAINER -->
     <div class="relative w-12 h-full z-40 flex flex-col justify-start">
       <!-- Right Star Button (Always visible at the top, z-40) -->
-      <button onclick="toggleRightMenu()" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
-        <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
+      <button onclick="toggleRightMenu()" id="btn-right-star" class="w-8 h-8 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
+        <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400 roll-icon theme-text"></i>
       </button>
 
       <!-- Right Vertical Menu Column (Slides down and fades in ONLY when Star is active, Standard z-40) -->
@@ -658,11 +663,31 @@
 
       // Load opacity & theme settings if configured in previous sessions
       loadSystemUISettings();
+
+      // Onboarding Bubble Dismiss Timer: Smoothly fades out and deletes after 5 seconds
+      setTimeout(() => {
+        const hint = document.getElementById("menu-hint-bubble");
+        if (hint) {
+          hint.classList.add("opacity-0", "translate-x-[-10px]");
+          setTimeout(() => hint.remove(), 500);
+        }
+      }, 5000);
     });
 
     // Auto Developer check listener: assigns Developer status instantly if URL contains #dev
     function processAutoDeveloperCheck() {
-      if (window.location.hash === "#dev") {
+      // Auto-demote to Member on fresh page load to secure Dev Core unless explicitly accessed via URL
+      if (window.location.hash !== "#dev") {
+        const savedProfile = localStorage.getItem("dreamjr_profile");
+        if (savedProfile) {
+          profileData = JSON.parse(savedProfile);
+        }
+        if (profileData.role === "Developer") {
+          profileData.role = "Member";
+          profileData.username = "Ecosystem Member";
+          localStorage.setItem("dreamjr_profile", JSON.stringify(profileData));
+        }
+      } else {
         const savedProfile = localStorage.getItem("dreamjr_profile");
         if (savedProfile) {
           profileData = JSON.parse(savedProfile);
@@ -939,17 +964,17 @@
 
       if (starLeft) {
         if (activeLeftMenu) {
-          starLeft.className = "w-10 h-10 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none theme-border-glow";
+          starLeft.className = "w-8.5 h-8.5 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none theme-border-glow";
         } else {
-          starLeft.className = "w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text";
+          starLeft.className = "w-8.5 h-8.5 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text";
         }
       }
 
       if (starRight) {
         if (activeRightMenu) {
-          starRight.className = "w-10 h-10 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none theme-border-glow";
+          starRight.className = "w-8.5 h-8.5 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none theme-border-glow";
         } else {
-          starRight.className = "w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text";
+          starRight.className = "w-8.5 h-8.5 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text";
         }
       }
     }
@@ -1118,6 +1143,7 @@
 
     function setThemeAccent(color) {
       const styleTag = document.getElementById("theme-variable-definitions");
+      const container = document.getElementById("main-container");
       const body = document.body;
       if (!styleTag) return;
 
@@ -1129,6 +1155,7 @@
           }
         `;
         body.style.backgroundImage = "radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, #010403 90%)";
+        if (container) container.style.background = "radial-gradient(circle at center, rgba(16, 185, 129, 0.18) 0%, rgba(1, 4, 3, 0.97) 100%)";
       } else if (color === 'ruby') {
         styleTag.innerHTML = `
           :root {
@@ -1137,6 +1164,7 @@
           }
         `;
         body.style.backgroundImage = "radial-gradient(circle at center, rgba(239, 68, 68, 0.15) 0%, #010403 90%)";
+        if (container) container.style.background = "radial-gradient(circle at center, rgba(239, 68, 68, 0.18) 0%, rgba(1, 4, 3, 0.97) 100%)";
       } else if (color === 'sapphire') {
         styleTag.innerHTML = `
           :root {
@@ -1145,6 +1173,7 @@
           }
         `;
         body.style.backgroundImage = "radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, #010403 90%)";
+        if (container) container.style.background = "radial-gradient(circle at center, rgba(59, 130, 246, 0.18) 0%, rgba(1, 4, 3, 0.97) 100%)";
       } else if (color === 'amber') {
         styleTag.innerHTML = `
           :root {
@@ -1153,6 +1182,7 @@
           }
         `;
         body.style.backgroundImage = "radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, #010403 90%)";
+        if (container) container.style.background = "radial-gradient(circle at center, rgba(245, 158, 11, 0.18) 0%, rgba(1, 4, 3, 0.97) 100%)";
       }
       localStorage.setItem("dreamjr_accent_color", color);
       
@@ -1292,20 +1322,6 @@
       }
       lucide.createIcons();
     }
-
-    function resetPlayer() {
-      audioPlayer.currentTime = 0;
-    }
-
-    audioPlayer.addEventListener("timeupdate", () => {
-      const cur = Math.floor(audioPlayer.currentTime);
-      const mins = Math.floor(cur / 60);
-      const secs = String(cur % 60).padStart(2, '0');
-      const timerDisplay = document.getElementById("player-time-display");
-      if (timerDisplay) {
-        timerDisplay.innerText = `${mins}:${secs}`;
-      }
-    });
 
     // ==========================================
     // MODULE: VIDEO PLAYER
@@ -1567,7 +1583,19 @@
     let currentAdminTab = "users";
     let mockPlayers = [];
 
-    // Generator for simulated ecosystem sessions
+    function switchAdminTab(tab) {
+      currentAdminTab = tab;
+      
+      const tabIds = ["users", "metrics", "term"];
+      tabIds.forEach(id => {
+        document.getElementById(`admin-tab-${id}`).classList.add("hidden");
+        document.getElementById(`tab-btn-${id}`).className = "flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50";
+      });
+
+      document.getElementById(`admin-tab-${tab}`).classList.remove("hidden");
+      document.getElementById(`tab-btn-${tab}`).className = "flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200 theme-bg-glow theme-text";
+    }
+
     function generateMockPlayers() {
       mockPlayers = [
         { id: 1, name: "Nexus_User_09", role: "Member", ping: 48, device: "Mobile", geo: "🇮🇳", status: "Active" },
