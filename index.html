@@ -11,42 +11,58 @@
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
+  <style id="theme-variable-definitions">
+    /* Core Neon Glow Palette Variables */
+    :root {
+      --theme-primary: 16, 185, 129; /* Emerald */
+      --theme-glow: 52, 211, 153;
+    }
+  </style>
+
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #010402;
-      background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.12) 0%, #010403 90%);
+      background-image: radial-gradient(circle at center, rgba(var(--theme-primary), 0.12) 0%, #010403 90%);
       overscroll-behavior: none;
     }
 
     .signature {
       font-family: 'Mr Dafoe', cursive;
       color: #d1fae5;
-      text-shadow: 0 0 6px rgba(16, 185, 129, 0.8), 
-                   0 0 15px rgba(16, 185, 129, 0.6), 
-                   0 0 30px rgba(5, 150, 105, 0.4);
+      text-shadow: 0 0 6px rgba(var(--theme-primary), 0.8), 
+                   0 0 15px rgba(var(--theme-primary), 0.6), 
+                   0 0 30px rgba(var(--theme-primary), 0.4);
+    }
+
+    /* Dynamic Theme glow assignments */
+    .theme-text {
+      color: rgb(var(--theme-glow)) !important;
+    }
+    .theme-text-primary {
+      color: rgb(var(--theme-primary)) !important;
+    }
+    .theme-bg-glow {
+      background: rgba(var(--theme-primary), 0.12) !important;
+    }
+    .theme-border {
+      border-color: rgba(var(--theme-primary), 0.25) !important;
+    }
+    .theme-border-glow {
+      border-color: rgba(var(--theme-glow), 0.5) !important;
+      box-shadow: 0 0 10px rgba(var(--theme-glow), 0.25), inset 0 0 4px rgba(var(--theme-glow), 0.1) !important;
     }
 
     /* Glassmorphic main desktop/device frame */
     .glass-panel {
-      background: rgba(3, 10, 7, 0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(16, 185, 129, 0.15);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7), inset 0 0 1px rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(var(--theme-primary), 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7), inset 0 0 1px rgba(var(--theme-primary), 0.15);
     }
 
     /* Solid color menus to resolve double blur Android rendering bugs */
     .solid-menu-panel {
-      background: rgba(4, 12, 9, 0.98);
-      border: 1px solid rgba(16, 185, 129, 0.22);
+      border: 1px solid rgba(var(--theme-primary), 0.22);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
-    }
-
-    .glow-capsule {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(52, 211, 153, 0.5);
-      box-shadow: 0 0 10px rgba(52, 211, 153, 0.25), inset 0 0 4px rgba(52, 211, 153, 0.1);
     }
 
     /* Micro-interactions: Smooth rolling rotation */
@@ -70,7 +86,7 @@
       background: rgba(4, 15, 12, 0.05);
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(16, 185, 129, 0.25);
+      background: rgba(var(--theme-primary), 0.25);
       border-radius: 9px;
     }
   </style>
@@ -93,7 +109,7 @@
   </div>
 
   <!-- Mobile Frame Container -->
-  <div class="relative w-full max-w-md h-container overflow-hidden glass-panel flex justify-between p-3 gap-2 z-20 sm:rounded-[36px]">
+  <div id="main-container" class="relative w-full max-w-md h-container overflow-hidden glass-panel flex justify-between p-3 gap-2 z-20 sm:rounded-[36px]" style="background: rgba(3, 10, 7, 0.65);">
     
     <!-- Tap-to-Dismiss Backdrop behind details but above background -->
     <div id="overlay-backdrop" class="absolute inset-0 bg-black/60 z-10 hidden transition-opacity duration-300 opacity-0" onclick="closeAllMenusAndDetails()"></div>
@@ -103,7 +119,7 @@
       <div class="flex flex-col items-center gap-5 w-full">
         <!-- Pulse Star Menu Trigger -->
         <button onclick="toggleLeftMenu('ai')" id="btn-left-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse">
-          <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon"></i>
+          <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
         </button>
         
         <!-- Left Sidebar Inactive Displays (Menus only open from Star) -->
@@ -131,7 +147,7 @@
     <!-- LEFT EXPANDING SUB-MENU PANEL (Scaled down to w-56 for tighter mobile scaling) -->
     <div id="left-sub-panel" class="absolute left-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-25 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
-        <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5">Left Portal</h3>
+        <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5 theme-text">Left Portal</h3>
         <button onclick="closeLeftMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
           <i data-lucide="x" class="w-3.5 h-3.5"></i>
         </button>
@@ -147,10 +163,10 @@
         <h1 class="signature text-4xl sm:text-5xl tracking-widest leading-none">DreamJr</h1>
       </div>
 
-      <!-- CENTER DETAIL: Music Player (Adjusted to inset-y-1 inset-x-1 to prevent narrow squished strip) -->
+      <!-- CENTER DETAIL: Music Player -->
       <div id="detail-music" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
-          <button onclick="handleDetailBack('music')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+          <button onclick="handleDetailBack('music')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
           </button>
           <span class="text-[9px] text-emerald-500/50 tracking-wider font-semibold uppercase">Music Player</span>
@@ -194,7 +210,7 @@
       <!-- CENTER DETAIL: Video Player -->
       <div id="detail-video" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
-          <button onclick="handleDetailBack('video')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+          <button onclick="handleDetailBack('video')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
           </button>
           <span class="text-[9px] text-emerald-500/50 tracking-wider font-semibold uppercase">Video Player</span>
@@ -229,7 +245,7 @@
       <!-- CENTER DETAIL: Private Vault -->
       <div id="detail-private" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
-          <button onclick="handleDetailBack('private')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+          <button onclick="handleDetailBack('private')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
           </button>
           <span class="text-[9px] text-emerald-500/50 tracking-wider font-semibold uppercase">Private Vault</span>
@@ -250,25 +266,24 @@
       <div id="detail-ai" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex flex-col gap-2 pb-2 border-b border-emerald-950/50 shrink-0">
           <div class="flex justify-between items-center">
-            <button onclick="handleDetailBack('ai')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+            <button onclick="handleDetailBack('ai')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
               <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
             </button>
             
             <div class="flex items-center gap-1">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-400"></i>
-              <span class="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider">Gemini AI</span>
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-400 theme-text"></i>
+              <span class="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider theme-text">Gemini AI</span>
             </div>
           </div>
 
-          <div class="flex items-center gap-1 bg-black/30 p-1 rounded-lg border border-emerald-500/10">
+          <div class="flex items-center gap-1 bg-black/30 p-1 rounded-lg border border-emerald-500/10 theme-border">
             <input type="password" id="gemini-key-input" placeholder="Paste Gemini API Key" class="bg-transparent text-emerald-300 text-[10px] rounded px-2 py-1 flex-1 focus:outline-none placeholder-emerald-800">
-            <button onclick="saveApiKey()" class="text-[8px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded font-bold uppercase">
+            <button onclick="saveApiKey()" class="text-[8px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded font-bold uppercase theme-text theme-bg-glow">
               Save
             </button>
           </div>
         </div>
 
-        <!-- Chat history -->
         <div id="chat-messages" class="flex-1 overflow-y-auto space-y-2.5 my-2 pr-1 text-[10px] text-emerald-200 text-left">
           <div class="text-center text-emerald-500/40 text-[9px] my-1 leading-normal">
             Provide your API Key to enable responses.
@@ -276,8 +291,8 @@
         </div>
 
         <div class="flex gap-1.5 items-center shrink-0">
-          <input type="text" id="chat-input" placeholder="Ask Gemini..." onkeydown="handleChatSubmit(event)" class="flex-1 bg-black/40 border border-emerald-500/20 text-emerald-200 placeholder-emerald-700/80 text-[11px] rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500/40">
-          <button onclick="sendChatMessage()" class="w-8 h-8 rounded-xl glow-capsule flex items-center justify-center text-emerald-300 shrink-0">
+          <input type="text" id="chat-input" placeholder="Ask Gemini..." onkeydown="handleChatSubmit(event)" class="flex-1 bg-black/40 border border-emerald-500/20 text-emerald-200 placeholder-emerald-700/80 text-[11px] rounded-xl px-3 py-2 focus:outline-none theme-border">
+          <button onclick="sendChatMessage()" class="w-8 h-8 rounded-xl glow-capsule flex items-center justify-center text-emerald-300 shrink-0 theme-text theme-border-glow">
             <i data-lucide="send-horizontal" class="w-3.5 h-3.5"></i>
           </button>
         </div>
@@ -287,30 +302,30 @@
       <div id="detail-social" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-y-auto">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
-            <button onclick="handleDetailBack('social')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+            <button onclick="handleDetailBack('social')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
               <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
             </button>
-            <span class="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider">Social Hub</span>
-            <i data-lucide="share-2" class="w-3.5 h-3.5 text-emerald-500/60"></i>
+            <span class="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider theme-text">Social Hub</span>
+            <i data-lucide="share-2" class="w-3.5 h-3.5 text-emerald-500/60 theme-text"></i>
           </div>
 
-          <div class="mt-3 p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/15 space-y-2 text-left shrink-0">
+          <div class="mt-3 p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/15 space-y-2 text-left shrink-0 theme-border">
             <div class="flex items-center justify-between">
-              <h4 class="text-[11px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="send" class="w-3 h-3 text-indigo-400"></i> Discord Webhook</h4>
+              <h4 class="text-[11px] font-bold text-emerald-300 flex items-center gap-1 theme-text"><i data-lucide="send" class="w-3 h-3 text-indigo-400"></i> Discord Webhook</h4>
               <span class="text-[8px] text-emerald-500/50 uppercase font-bold">Config</span>
             </div>
-            <input type="text" id="dc-webhook-url" placeholder="Paste Discord Webhook URL" class="w-full bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-300 placeholder-emerald-800 focus:outline-none">
-            <textarea id="dc-webhook-msg" placeholder="Type message to post on your Discord server..." rows="2" class="w-full bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-200 placeholder-emerald-800 focus:outline-none resize-none"></textarea>
-            <button onclick="sendDiscordWebhook()" class="w-full py-1.5 bg-emerald-500/20 text-emerald-300 text-[9px] font-bold rounded-lg border border-emerald-500/30 uppercase tracking-wide">Publish Message</button>
+            <input type="text" id="dc-webhook-url" placeholder="Paste Discord Webhook URL" class="w-full bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-300 placeholder-emerald-800 focus:outline-none theme-border">
+            <textarea id="dc-webhook-msg" placeholder="Type message to post on your Discord server..." rows="2" class="w-full bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-200 placeholder-emerald-800 focus:outline-none resize-none theme-border"></textarea>
+            <button onclick="sendDiscordWebhook()" class="w-full py-1.5 bg-emerald-500/20 text-emerald-300 text-[9px] font-bold rounded-lg border border-emerald-500/30 uppercase tracking-wide theme-text theme-bg-glow theme-border-glow">Publish Message</button>
           </div>
 
-          <div class="mt-3 p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/15 space-y-2 text-left shrink-0">
-            <h4 class="text-[11px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="users" class="w-3 h-3 text-indigo-400"></i> Discord Status</h4>
+          <div class="mt-3 p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/15 space-y-2 text-left shrink-0 theme-border">
+            <h4 class="text-[11px] font-bold text-emerald-300 flex items-center gap-1 theme-text"><i data-lucide="users" class="w-3 h-3 text-indigo-400"></i> Discord Status</h4>
             <div class="flex gap-1.5">
-              <input type="text" id="dc-server-id" placeholder="Enter Server ID" class="flex-1 bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-300 placeholder-emerald-800 focus:outline-none">
-              <button onclick="renderDiscordWidget()" class="bg-emerald-500/20 text-emerald-300 text-[9px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30">Sync</button>
+              <input type="text" id="dc-server-id" placeholder="Enter Server ID" class="flex-1 bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[9px] text-emerald-300 placeholder-emerald-800 focus:outline-none theme-border">
+              <button onclick="renderDiscordWidget()" class="bg-emerald-500/20 text-emerald-300 text-[9px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30 theme-text theme-bg-glow theme-border-glow">Sync</button>
             </div>
-            <div id="discord-widget-frame" class="w-full h-32 rounded bg-black/40 border border-emerald-500/10 overflow-hidden flex items-center justify-center">
+            <div id="discord-widget-frame" class="w-full h-32 rounded bg-black/40 border border-emerald-500/10 overflow-hidden flex items-center justify-center theme-border">
               <span class="text-[8px] text-emerald-500/40">Enter ID to load Discord server list</span>
             </div>
           </div>
@@ -321,18 +336,17 @@
       <div id="detail-profile" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
-            <button onclick="handleDetailBack('profile')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+            <button onclick="handleDetailBack('profile')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
               <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
             </button>
-            <span class="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider">Profile Card</span>
-            <span id="role-tag" class="bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase">Member</span>
+            <span class="text-[9px] text-emerald-300 font-semibold uppercase tracking-wider theme-text">Profile Card</span>
+            <span id="role-tag" class="bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase theme-border-glow">Member</span>
           </div>
 
           <!-- Profile Scrollable Card Wrapper -->
           <div class="flex-1 overflow-y-auto space-y-3.5 pr-1">
             
-            <!-- Profile Info Display -->
-            <div class="flex items-center gap-3 p-2 bg-emerald-950/15 rounded-xl border border-emerald-500/10 text-left">
+            <div class="flex items-center gap-3 p-2 bg-emerald-950/15 rounded-xl border border-emerald-500/10 text-left theme-border">
               <div class="relative">
                 <img id="profile-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%2310b981' opacity='0.1'/><text x='50%' y='60%' font-size='40' font-family='sans-serif' text-anchor='middle' fill='%2334d399'>U</text></svg>" class="w-12 h-12 rounded-full border-2 border-emerald-500/30 object-cover">
                 <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-slate-950 rounded-full animate-ping"></span>
@@ -341,10 +355,10 @@
               <div>
                 <div class="flex items-center gap-1.5">
                   <h4 id="display-name" class="text-xs font-bold text-emerald-100">Anonymous</h4>
-                  <span id="role-text" class="text-[8px] text-emerald-400 font-semibold bg-emerald-500/10 px-1 py-0.2 rounded">Member</span>
+                  <span id="role-text" class="text-[8px] text-emerald-400 font-semibold bg-emerald-500/10 px-1 py-0.2 rounded theme-bg-glow theme-text">Member</span>
                 </div>
                 <p id="display-bio" class="text-[9px] text-emerald-500/70 italic mt-0.5">Accessing ecosystem...</p>
-                <div class="text-[8px] text-emerald-400/80 font-semibold flex items-center gap-1 mt-1 bg-black/20 px-1.5 py-0.5 rounded-full w-max">
+                <div class="text-[8px] text-emerald-400/80 font-semibold flex items-center gap-1 mt-1 bg-black/20 px-1.5 py-0.5 rounded-full w-max theme-text">
                   <i data-lucide="clock" class="w-2.5 h-2.5"></i>
                   <span id="session-timer">00:00:00</span>
                 </div>
@@ -352,30 +366,29 @@
             </div>
 
             <!-- Edit Profile Panel -->
-            <div class="space-y-2.5 p-2.5 bg-emerald-950/5 border border-emerald-500/10 rounded-xl text-left">
+            <div class="space-y-2.5 p-2.5 bg-emerald-950/5 border border-emerald-500/10 rounded-xl text-left theme-border">
               <div class="flex justify-between items-center pb-1 border-b border-emerald-950/50">
-                <span class="text-[9px] text-emerald-300 font-bold uppercase">Customize Card</span>
+                <span class="text-[9px] text-emerald-300 font-bold uppercase theme-text">Customize Card</span>
                 <button onclick="generateProfileToken()" class="text-[8px] bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 px-1.5 py-0.5 rounded font-bold uppercase">Copy Token</button>
               </div>
               <div class="grid grid-cols-2 gap-1.5">
-                <input type="text" id="input-username" placeholder="Name" class="bg-black/30 border border-emerald-500/10 text-[9px] text-emerald-300 rounded p-1 focus:outline-none">
-                <input type="text" id="input-bio" placeholder="Short Bio" class="bg-black/30 border border-emerald-500/10 text-[9px] text-emerald-300 rounded p-1 focus:outline-none">
+                <input type="text" id="input-username" placeholder="Name" class="bg-black/30 border border-emerald-500/10 text-[9px] text-emerald-300 rounded p-1 focus:outline-none theme-border">
+                <input type="text" id="input-bio" placeholder="Short Bio" class="bg-black/30 border border-emerald-500/10 text-[9px] text-emerald-300 rounded p-1 focus:outline-none theme-border">
               </div>
               <div class="grid grid-cols-3 gap-1">
                 <span class="text-[8px] text-emerald-500/50 flex items-center px-1">Role controlled via token below:</span>
-                <input type="text" id="input-pfp" placeholder="Avatar URL" class="bg-black/30 border border-emerald-500/10 text-[8px] text-emerald-300 rounded p-1 focus:outline-none col-span-2">
+                <input type="text" id="input-pfp" placeholder="Avatar URL" class="bg-black/30 border border-emerald-500/10 text-[8px] text-emerald-300 rounded p-1 focus:outline-none col-span-2 theme-border">
               </div>
               
-              <!-- Staff Verification Field -->
               <div class="border-t border-emerald-950/50 pt-2 space-y-1">
-                <span class="text-[8px] text-emerald-400 font-semibold uppercase">Staff Token Access</span>
+                <span class="text-[8px] text-emerald-400 font-semibold uppercase theme-text">Staff Token Access</span>
                 <div class="flex gap-1.5">
-                  <input type="password" id="input-staff-key" placeholder="Enter Staff Verification Key" class="flex-1 bg-black/40 border border-emerald-500/10 text-[8px] text-emerald-300 rounded p-1 focus:outline-none placeholder-emerald-800">
-                  <button onclick="verifyStaffToken()" class="bg-emerald-500/20 text-emerald-300 text-[8px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30">Unlock</button>
+                  <input type="password" id="input-staff-key" placeholder="Enter Staff Key" class="flex-1 bg-black/40 border border-emerald-500/10 text-[8px] text-emerald-300 rounded p-1 focus:outline-none placeholder-emerald-800 theme-border">
+                  <button onclick="verifyStaffToken()" class="bg-emerald-500/20 text-emerald-300 text-[8px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30 theme-text theme-bg-glow theme-border-glow">Unlock</button>
                 </div>
               </div>
 
-              <button onclick="saveUserProfile()" class="w-full py-1.5 bg-emerald-500/20 text-emerald-300 text-[9px] font-bold rounded-lg border border-emerald-500/30 uppercase">Save Profile</button>
+              <button onclick="saveUserProfile()" class="w-full py-1.5 bg-emerald-500/20 text-emerald-300 text-[9px] font-bold rounded-lg border border-emerald-500/30 uppercase theme-text theme-bg-glow theme-border-glow">Save Profile</button>
             </div>
             
           </div>
@@ -387,7 +400,7 @@
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
-            <button onclick="handleDetailBack('profile')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5">
+            <button onclick="handleDetailBack('profile')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
               <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
             </button>
             <div class="flex items-center gap-1">
@@ -397,9 +410,8 @@
             <span class="text-[8px] text-emerald-500/40 font-mono">Ver 1.4.2</span>
           </div>
 
-          <!-- Tab Navigation for Admin Console -->
           <div class="flex border-b border-emerald-950/50 pb-1.5 mb-2 gap-1 shrink-0">
-            <button onclick="switchAdminTab('users')" id="tab-btn-users" class="flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200">Session Monitor</button>
+            <button onclick="switchAdminTab('users')" id="tab-btn-users" class="flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200 theme-bg-glow theme-text">Session Monitor</button>
             <button onclick="switchAdminTab('metrics')" id="tab-btn-metrics" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50">Core Metrics</button>
             <button onclick="switchAdminTab('term')" id="tab-btn-term" class="flex-1 text-[8px] font-bold uppercase py-1 rounded text-emerald-500/50">Command Term</button>
           </div>
@@ -416,17 +428,16 @@
           <!-- ADMIN TAB 2: Core Metrics -->
           <div id="admin-tab-metrics" class="flex-1 overflow-y-auto space-y-3.5 hidden text-left">
             <div class="grid grid-cols-2 gap-2">
-              <div class="bg-black/40 border border-emerald-500/10 p-2 rounded-lg">
+              <div class="bg-black/40 border border-emerald-500/10 p-2 rounded-lg theme-border">
                 <span class="text-[8px] text-emerald-500/50 block uppercase">API Bandwidth</span>
-                <span id="metric-bandwidth" class="text-xs font-mono font-bold text-emerald-300">42.8 KB/s</span>
+                <span id="metric-bandwidth" class="text-xs font-mono font-bold text-emerald-300 theme-text">42.8 KB/s</span>
               </div>
-              <div class="bg-black/40 border border-emerald-500/10 p-2 rounded-lg">
+              <div class="bg-black/40 border border-emerald-500/10 p-2 rounded-lg theme-border">
                 <span class="text-[8px] text-emerald-500/50 block uppercase">Gateway Ping</span>
-                <span id="metric-ping" class="text-xs font-mono font-bold text-emerald-300">38 ms</span>
+                <span id="metric-ping" class="text-xs font-mono font-bold text-emerald-300 theme-text">38 ms</span>
               </div>
             </div>
 
-            <!-- Lockout switch -->
             <div class="p-2.5 rounded-lg bg-red-950/10 border border-red-500/20 space-y-2">
               <div class="flex justify-between items-center">
                 <div>
@@ -437,42 +448,90 @@
               </div>
             </div>
 
-            <!-- Custom System UI Wallpaper Config Selector -->
-            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left">
-              <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="palette" class="w-3.5 h-3.5"></i> System Wallpaper Select</h4>
-              <div class="grid grid-cols-3 gap-1">
-                <button onclick="setWallpaper('koenigsegg')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase">CC850</button>
-                <button onclick="setWallpaper('blackhole')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase">Cosmic</button>
-                <button onclick="setWallpaper('gradient')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase">Gradient</button>
-              </div>
-              <div class="relative flex items-center justify-center border border-dashed border-emerald-500/25 rounded-lg py-1.5 bg-emerald-950/5 hover:bg-emerald-950/10 transition-colors mt-1.5">
-                <input type="file" id="custom-wallpaper-input" accept="video/mp4" class="absolute inset-0 opacity-0 cursor-pointer" onchange="uploadCustomWallpaper(event)">
-                <div class="text-[8px] text-emerald-400/80 flex items-center gap-1">
-                  <i data-lucide="upload" class="w-3 h-3"></i> Upload Custom MP4 Video
-                </div>
-              </div>
-            </div>
-
-            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left">
-              <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3 text-red-400"></i> Token Inspect Core</h4>
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 text-left shrink-0 theme-border">
+              <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1 theme-text"><i data-lucide="shield-check" class="w-3 h-3 text-red-400"></i> Token Inspect Core</h4>
               <div class="flex gap-1.5">
-                <input type="text" id="admin-search-token" placeholder="Paste Profile Token / Hash" class="flex-1 bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[8px] text-emerald-300 placeholder-emerald-800 focus:outline-none">
-                <button onclick="adminLookupProfile()" class="bg-emerald-500/20 text-emerald-300 text-[8px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30">Inspect</button>
+                <input type="text" id="admin-search-token" placeholder="Paste Profile Token / Hash" class="flex-1 bg-black/40 border border-emerald-500/10 rounded px-2 py-1 text-[8px] text-emerald-300 placeholder-emerald-800 focus:outline-none theme-border">
+                <button onclick="adminLookupProfile()" class="bg-emerald-500/20 text-emerald-300 text-[8px] px-2.5 py-1 rounded font-bold uppercase border border-emerald-500/30 theme-text theme-bg-glow theme-border-glow">Inspect</button>
               </div>
-              <div id="admin-inspect-result" class="hidden p-2 bg-emerald-950/20 rounded border border-emerald-500/10 text-[9px] text-emerald-300 space-y-1"></div>
+              <div id="admin-inspect-result" class="hidden p-2 bg-emerald-950/20 rounded border border-emerald-500/10 text-[9px] text-emerald-300 space-y-1 theme-border"></div>
             </div>
           </div>
 
           <!-- ADMIN TAB 3: Command Terminal -->
           <div id="admin-tab-term" class="flex-1 flex flex-col overflow-hidden hidden">
-            <div id="terminal-logs" class="flex-1 bg-black/80 border border-emerald-500/15 rounded-lg p-2 font-mono text-[9px] text-emerald-400 space-y-1 overflow-y-auto text-left">
+            <div id="terminal-logs" class="flex-1 bg-black/80 border border-emerald-500/15 rounded-lg p-2 font-mono text-[9px] text-emerald-400 space-y-1 overflow-y-auto text-left theme-border">
               <div>[SYSTEM] Developer Console verified and fully operational.</div>
               <div>[SYSTEM] Type /help to query system parameters.</div>
             </div>
             <div class="flex gap-1 mt-2 shrink-0">
               <span class="text-red-400 font-mono text-xs self-center">></span>
-              <input type="text" id="terminal-input" placeholder="Enter server command..." onkeydown="handleTerminalSubmit(event)" class="flex-1 bg-black/60 border border-emerald-500/20 rounded px-2 py-1 font-mono text-[10px] text-emerald-200 focus:outline-none">
+              <input type="text" id="terminal-input" placeholder="Enter server command..." onkeydown="handleTerminalSubmit(event)" class="flex-1 bg-black/60 border border-emerald-500/20 rounded px-2 py-1 font-mono text-[10px] text-emerald-200 focus:outline-none theme-border">
             </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CENTER DETAIL: Advanced System Settings -->
+      <div id="detail-settings" class="absolute inset-y-1 inset-x-1 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+        <div class="w-full h-full flex flex-col justify-between overflow-hidden">
+          
+          <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
+            <button onclick="handleDetailBack('settings')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
+              <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
+            </button>
+            <div class="flex items-center gap-1">
+              <i data-lucide="settings" class="w-3.5 h-3.5 text-emerald-400 theme-text"></i>
+              <span class="text-[9px] text-emerald-300 font-bold uppercase tracking-wider theme-text">System Settings</span>
+            </div>
+            <div></div>
+          </div>
+
+          <!-- Settings panel body -->
+          <div class="flex-1 overflow-y-auto space-y-4 pr-1 text-left">
+            
+            <!-- Opacity capacity adjust slider -->
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-1.5 theme-border">
+              <h4 class="text-[10px] font-bold text-emerald-300 flex items-center justify-between theme-text">
+                <span>Glass Screen Opacity</span>
+                <span id="glass-opacity-display" class="font-mono text-[9px]">65%</span>
+              </h4>
+              <input type="range" min="10" max="100" value="65" id="glass-opacity-slider" oninput="adjustGlassOpacity(this.value)" class="w-full h-1 bg-emerald-950 rounded-lg appearance-none cursor-pointer accent-emerald-400">
+              <p class="text-[8px] text-emerald-500/60 leading-normal">Drag to dynamically configure transparency levels of your user interface panels.</p>
+            </div>
+
+            <!-- Theme Color Selector -->
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 theme-border">
+              <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1 theme-text">
+                <i data-lucide="palette" class="w-3.5 h-3.5"></i> Neon Glow Theme
+              </h4>
+              <div class="grid grid-cols-4 gap-1">
+                <button onclick="setThemeAccent('emerald')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 rounded uppercase">Green</button>
+                <button onclick="setThemeAccent('ruby')" class="text-[8px] font-bold py-1 bg-red-500/10 border border-red-500/30 text-red-300 rounded uppercase">Red</button>
+                <button onclick="setThemeAccent('sapphire')" class="text-[8px] font-bold py-1 bg-blue-500/10 border border-blue-500/30 text-blue-300 rounded uppercase">Blue</button>
+                <button onclick="setThemeAccent('amber')" class="text-[8px] font-bold py-1 bg-amber-500/10 border border-amber-500/30 text-amber-300 rounded uppercase">Amber</button>
+              </div>
+            </div>
+
+            <!-- Wallpaper selector duplicate from Admin Console for easy reach -->
+            <div class="p-2.5 bg-black/40 border border-emerald-500/15 rounded-xl space-y-2 theme-border">
+              <h4 class="text-[10px] font-bold text-emerald-300 flex items-center gap-1 theme-text">
+                <i data-lucide="image" class="w-3.5 h-3.5"></i> Background Wallpaper
+              </h4>
+              <div class="grid grid-cols-3 gap-1">
+                <button onclick="setWallpaper('koenigsegg')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase theme-border">CC850</button>
+                <button onclick="setWallpaper('blackhole')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase theme-border">Cosmic</button>
+                <button onclick="setWallpaper('gradient')" class="text-[8px] font-bold py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded uppercase theme-border">Gradient</button>
+              </div>
+              <div class="relative flex items-center justify-center border border-dashed border-emerald-500/25 rounded-lg py-1.5 bg-emerald-950/5 hover:bg-emerald-950/10 transition-colors mt-1">
+                <input type="file" id="custom-wallpaper-input-settings" accept="video/mp4" class="absolute inset-0 opacity-0 cursor-pointer" onchange="uploadCustomWallpaper(event)">
+                <div class="text-[8px] text-emerald-400/80 flex items-center gap-1 theme-text">
+                  <i data-lucide="upload" class="w-3 h-3"></i> Upload Custom MP4 Video
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -480,13 +539,13 @@
 
     </div>
 
-    <!-- RIGHT EXPANDING SUB-MENU PANEL (Tighter scaling) -->
-    <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-25 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
-      <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5">
+    <!-- RIGHT EXPANDING SUB-MENU PANEL -->
+    <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-20 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
+      <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <button onclick="closeRightMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
           <i data-lucide="x" class="w-3.5 h-3.5"></i>
         </button>
-        <h3 id="right-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5">Right Portal</h3>
+        <h3 id="right-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5 theme-text">Right Portal</h3>
       </div>
       <div id="right-panel-content" class="flex-1 flex flex-col gap-2 overflow-y-auto pr-1"></div>
     </div>
@@ -496,7 +555,7 @@
       <div class="flex flex-col items-center gap-5 w-full">
         <!-- Pulse Star Menu Trigger -->
         <button onclick="toggleRightMenu('music')" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse">
-          <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon"></i>
+          <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
         </button>
         
         <!-- Right Sidebar Inactive Displays (Menus only open from Star) -->
@@ -558,16 +617,14 @@
 
     // Initial setup on DOM Ready
     document.addEventListener("DOMContentLoaded", () => {
-      // 1. Process Automatic Developer Check via URL Hash bypass
       processAutoDeveloperCheck();
 
-      // 2. API Key recovery
       const savedKey = localStorage.getItem("gemini_api_key");
       if (savedKey) {
-        document.getElementById("gemini-key-input").value = savedKey;
+        const input = document.getElementById("gemini-key-input");
+        if (input) input.value = savedKey;
       }
       
-      // 3. Load stored custom profile data (or generate default "Member" role on first launch)
       const savedProfile = localStorage.getItem("dreamjr_profile");
       if (savedProfile) {
         profileData = JSON.parse(savedProfile);
@@ -578,14 +635,12 @@
       }
       updateProfileDisplay();
 
-      // 4. Initialize IndexedDB private vault store
       initIndexedDB();
-
-      // 5. Setup simulated FPS staff console users
       generateMockPlayers();
-
-      // 6. Setup telemetry ticks
       setInterval(tickServerMetrics, 2000);
+
+      // Load opacity & theme settings if configured in previous sessions
+      loadSystemUISettings();
     });
 
     // Auto Developer check listener: assigns Developer status instantly if URL contains #dev
@@ -653,7 +708,7 @@
         } else if (profileData.role === 'Admin') {
           roleTag.className = "bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase";
         } else if (profileData.role === 'Member') {
-          roleTag.className = "bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase";
+          roleTag.className = "bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase theme-border-glow";
         } else {
           roleTag.className = "bg-slate-500/15 border border-slate-500/30 text-slate-300 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase";
         }
@@ -708,7 +763,7 @@
         const formattedSecs = `${Math.floor(runtime / 3600)}h ${Math.floor((runtime % 3600) / 60)}m`;
 
         output.innerHTML = `
-          <div class="border-b border-emerald-500/20 pb-1 font-bold text-emerald-400">Target Lookup: User Verified</div>
+          <div class="border-b border-emerald-500/20 pb-1 font-bold text-emerald-400 theme-text theme-border">Target Lookup: User Verified</div>
           <div class="flex items-center gap-1.5 my-1">
             <span class="font-semibold text-emerald-100">Username:</span> ${decoded.n || "N/A"}
           </div>
@@ -812,8 +867,9 @@
     }
 
     function checkDismissBackdrop() {
-      const isAnyDetailOpen = ["detail-music", "detail-video", "detail-private", "detail-ai", "detail-social", "detail-profile", "detail-admin"].some(id => {
-        return !document.getElementById(id).classList.contains("opacity-0");
+      const isAnyDetailOpen = ["detail-music", "detail-video", "detail-private", "detail-ai", "detail-social", "detail-profile", "detail-admin", "detail-settings"].some(id => {
+        const el = document.getElementById(id);
+        return el && !el.classList.contains("opacity-0");
       });
 
       if (!activeLeftMenu && !activeRightMenu && !isAnyDetailOpen) {
@@ -835,17 +891,17 @@
 
       if (starLeft) {
         if (activeLeftMenu) {
-          starLeft.className = "w-10 h-10 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none";
+          starLeft.className = "w-10 h-10 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none theme-border-glow";
         } else {
-          starLeft.className = "w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse";
+          starLeft.className = "w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text";
         }
       }
 
       if (starRight) {
         if (activeRightMenu) {
-          starRight.className = "w-10 h-10 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none";
+          starRight.className = "w-10 h-10 rounded-full flex items-center justify-center text-emerald-300 glow-capsule transition-all duration-200 animate-none theme-border-glow";
         } else {
-          starRight.className = "w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse";
+          starRight.className = "w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text";
         }
       }
     }
@@ -854,11 +910,12 @@
       const titleEl = document.getElementById("left-panel-title");
       const contentEl = document.getElementById("left-panel-content");
 
-      titleEl.innerHTML = `<i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400"></i> Utilities`;
+      titleEl.innerHTML = `<i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400 theme-text"></i> Utilities`;
       contentEl.innerHTML = `
         ${getMenuItemHtml('ai-launch', 'Gemini Chatbot', 'Conversational Assistant', 'sparkles')}
         ${getMenuItemHtml('video-player', 'Custom Player', 'Stream files or URLs', 'film')}
         ${getMenuItemHtml('vault-launch', 'Media Safe', 'Encrypted local sandbox', 'folder-lock')}
+        ${getMenuItemHtml('settings-launch', 'System Settings', 'UI opacity & accent details', 'settings')}
       `;
       lucide.createIcons();
     }
@@ -867,7 +924,7 @@
       const titleEl = document.getElementById("right-panel-title");
       const contentEl = document.getElementById("right-panel-content");
 
-      titleEl.innerHTML = `Ecosystem <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400"></i>`;
+      titleEl.innerHTML = `Ecosystem <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400 theme-text"></i>`;
       
       let extraOptions = "";
       if (profileData.role === 'Admin' || profileData.role === 'Developer') {
@@ -885,9 +942,9 @@
 
     function getMenuItemHtml(id, label, description, icon) {
       return `
-        <button onclick="handleOptionSelect('${id}')" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/10 text-left hover:bg-emerald-950/20 hover:border-emerald-500/25 transition-all group">
+        <button onclick="handleOptionSelect('${id}')" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-emerald-950/10 border border-emerald-500/10 text-left hover:bg-emerald-950/20 hover:border-emerald-500/25 transition-all group theme-border">
           <div class="flex items-center gap-2.5 min-w-0">
-            <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/15 shrink-0">
+            <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/15 shrink-0 theme-text theme-border">
               <i data-lucide="${icon}" class="w-3.5 h-3.5"></i>
             </div>
             <div class="truncate">
@@ -900,12 +957,14 @@
       `;
     }
 
-    // Handles Option Select: Smoothly closes active sub-menus first, then scales detail view open
+    // Handles Option Select: Fixes ReferenceError bug by capturing active states before closing menus
     function handleOptionSelect(id) {
+      const leftType = activeLeftMenu;
+      const rightType = activeRightMenu;
+
+      // Close sub-menus smoothly first
       const leftPanel = document.getElementById("left-sub-panel");
       const rightPanel = document.getElementById("right-sub-panel");
-
-      // Slide menus closed smoothly first
       leftPanel.classList.add("translate-x-[-20px]", "opacity-0", "pointer-events-none");
       rightPanel.classList.add("translate-x-[20px]", "opacity-0", "pointer-events-none");
 
@@ -918,7 +977,7 @@
 
       // Delay open slightly to wait for menu slide-close transition (250ms) to complete
       setTimeout(() => {
-        // Reset sub-menu states completely in state variables
+        // Reset sub-menu state values
         activeLeftMenu = null;
         activeRightMenu = null;
         updateActiveButtonStates();
@@ -931,9 +990,11 @@
         else if (id.startsWith('social-')) activeId = "detail-social";
         else if (id.startsWith('profile-')) activeId = "detail-profile";
         else if (id.startsWith('admin-')) activeId = "detail-admin";
+        else if (id.startsWith('settings-')) activeId = "detail-settings";
 
         if (activeId) {
           const detail = document.getElementById(activeId);
+          detail.setAttribute('data-parent-menu', (id.startsWith('ai-') || id.startsWith('video-') || id.startsWith('vault-') || id.startsWith('settings-')) ? 'left:'+leftType : 'right:'+rightType);
           detail.classList.remove("opacity-0", "scale-95", "pointer-events-none");
           detail.classList.add("opacity-100", "scale-100", "pointer-events-auto");
         }
@@ -950,6 +1011,7 @@
       else if (type === 'social') activeDetailId = "detail-social";
       else if (type === 'profile') activeDetailId = "detail-profile";
       else if (type === 'admin') activeDetailId = "detail-admin";
+      else if (type === 'settings') activeDetailId = "detail-settings";
 
       const detailEl = document.getElementById(activeDetailId);
       if (!detailEl) return;
@@ -960,7 +1022,7 @@
 
       // Smoothly re-open parent menu
       setTimeout(() => {
-        if (type === 'ai' || type === 'video' || type === 'private') {
+        if (type === 'ai' || type === 'video' || type === 'private' || type === 'settings') {
           toggleLeftMenu('ai');
         } else {
           toggleRightMenu('profile');
@@ -969,7 +1031,7 @@
     }
 
     function closeAllDetails() {
-      const detailIds = ["detail-music", "detail-video", "detail-private", "detail-ai", "detail-social", "detail-profile", "detail-admin"];
+      const detailIds = ["detail-music", "detail-video", "detail-private", "detail-ai", "detail-social", "detail-profile", "detail-admin", "detail-settings"];
       detailIds.forEach(targetId => {
         const el = document.getElementById(targetId);
         if (el) el.classList.add("opacity-0", "scale-95", "pointer-events-none");
@@ -983,6 +1045,75 @@
       }
 
       checkDismissBackdrop();
+    }
+
+    // ==========================================
+    // MODULE: SYSTEM UI SETTINGS & ACCENT THEMES
+    // ==========================================
+    function adjustGlassOpacity(val) {
+      const container = document.getElementById("main-container");
+      const display = document.getElementById("glass-opacity-display");
+      if (display) display.innerText = `${val}%`;
+      if (container) {
+        container.style.backgroundColor = `rgba(3, 10, 7, ${val / 100})`;
+      }
+      localStorage.setItem("dreamjr_glass_opacity", val);
+    }
+
+    function setThemeAccent(color) {
+      const styleTag = document.getElementById("theme-variable-definitions");
+      if (!styleTag) return;
+
+      if (color === 'emerald') {
+        styleTag.innerHTML = `
+          :root {
+            --theme-primary: 16, 185, 129;
+            --theme-glow: 52, 211, 153;
+          }
+        `;
+      } else if (color === 'ruby') {
+        styleTag.innerHTML = `
+          :root {
+            --theme-primary: 239, 68, 68;
+            --theme-glow: 248, 113, 113;
+          }
+        `;
+      } else if (color === 'sapphire') {
+        styleTag.innerHTML = `
+          :root {
+            --theme-primary: 59, 130, 246;
+            --theme-glow: 96, 165, 250;
+          }
+        `;
+      } else if (color === 'amber') {
+        styleTag.innerHTML = `
+          :root {
+            --theme-primary: 245, 158, 11;
+            --theme-glow: 251, 191, 36;
+          }
+        `;
+      }
+      localStorage.setItem("dreamjr_accent_color", color);
+      
+      // Refresh lucide icons glow colors
+      setTimeout(updateActiveButtonStates, 10);
+      setTimeout(updateProfileDisplay, 10);
+    }
+
+    function loadSystemUISettings() {
+      // 1. Recover glass transparency opacity
+      const savedOpacity = localStorage.getItem("dreamjr_glass_opacity");
+      if (savedOpacity) {
+        adjustGlassOpacity(savedOpacity);
+        const slider = document.getElementById("glass-opacity-slider");
+        if (slider) slider.value = savedOpacity;
+      }
+
+      // 2. Recover accent glowing color
+      const savedAccent = localStorage.getItem("dreamjr_accent_color");
+      if (savedAccent) {
+        setThemeAccent(savedAccent);
+      }
     }
 
     // ==========================================
@@ -1214,9 +1345,9 @@
           }
 
           container.innerHTML += `
-            <div class="p-2 rounded-xl bg-black/45 border border-emerald-500/10 space-y-1.5 relative group">
+            <div class="p-2 rounded-xl bg-black/45 border border-emerald-500/10 space-y-1.5 relative group theme-border">
               <div class="flex justify-between items-center text-[9px]">
-                <span class="text-emerald-400 font-semibold truncate max-w-[150px]">${item.name}</span>
+                <span class="text-emerald-400 font-semibold truncate max-w-[150px] theme-text">${item.name}</span>
                 <button onclick="deleteFromVault(${item.id})" class="text-red-400/70 hover:text-red-400 transition-colors p-1 rounded hover:bg-red-500/10">
                   <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                 </button>
@@ -1286,7 +1417,8 @@
     document.addEventListener("DOMContentLoaded", () => {
       const cachedWebhook = localStorage.getItem("dreamjr_webhook");
       if (cachedWebhook) {
-        document.getElementById("dc-webhook-url").value = cachedWebhook;
+        const urlInput = document.getElementById("dc-webhook-url");
+        if (urlInput) urlInput.value = cachedWebhook;
       }
     });
 
@@ -1354,14 +1486,14 @@
       if (sender === "user") {
         markup = `
           <div id="${id}" class="flex gap-1.5 justify-end">
-            <div class="bg-emerald-500/20 border border-emerald-500/25 text-emerald-100 rounded-lg p-2 max-w-[85%] leading-relaxed">${text}</div>
+            <div class="bg-emerald-500/20 border border-emerald-500/25 text-emerald-100 rounded-lg p-2 max-w-[85%] leading-relaxed theme-bg-glow theme-border">${text}</div>
           </div>
         `;
       } else if (sender === "bot") {
         markup = `
           <div id="${id}" class="flex gap-1.5">
-            <div class="w-5 h-5 rounded bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400 shrink-0"><i data-lucide="bot" class="w-3 h-3"></i></div>
-            <div class="bg-emerald-950/20 border border-emerald-500/10 rounded-lg p-2 max-w-[85%] leading-relaxed">${text}</div>
+            <div class="w-5 h-5 rounded bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400 shrink-0 theme-bg-glow theme-border-glow"><i data-lucide="bot" class="w-3 h-3"></i></div>
+            <div class="bg-emerald-950/20 border border-emerald-500/10 rounded-lg p-2 max-w-[85%] leading-relaxed theme-border">${text}</div>
           </div>
         `;
       } else if (sender === "system") {
@@ -1373,8 +1505,8 @@
       } else {
         markup = `
           <div id="${id}" class="flex gap-1.5">
-            <div class="w-5 h-5 rounded bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400 shrink-0 animate-pulse"><i data-lucide="sparkles" class="w-3 h-3"></i></div>
-            <div class="bg-emerald-950/10 border border-emerald-500/10 text-emerald-500/60 rounded-lg p-2 max-w-[85%] leading-relaxed">${text}</div>
+            <div class="w-5 h-5 rounded bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400 shrink-0 animate-pulse theme-bg-glow theme-border-glow"><i data-lucide="sparkles" class="w-3 h-3"></i></div>
+            <div class="bg-emerald-950/10 border border-emerald-500/10 text-emerald-500/60 rounded-lg p-2 max-w-[85%] leading-relaxed theme-border">${text}</div>
           </div>
         `;
       }
@@ -1401,7 +1533,7 @@
       });
 
       document.getElementById(`admin-tab-${tab}`).classList.remove("hidden");
-      document.getElementById(`tab-btn-${tab}`).className = "flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200";
+      document.getElementById(`tab-btn-${tab}`).className = "flex-1 text-[8px] font-bold uppercase py-1 rounded bg-emerald-500/25 text-emerald-200 theme-bg-glow theme-text";
     }
 
     function generateMockPlayers() {
@@ -1435,14 +1567,14 @@
       mockPlayers.forEach(p => {
         let statusColor = p.status === 'Active' ? 'bg-emerald-400' : 'bg-amber-400';
         container.innerHTML += `
-          <div id="player-row-${p.id}" class="flex items-center justify-between p-2 rounded-lg bg-emerald-950/10 border border-emerald-500/10 text-left">
+          <div id="player-row-${p.id}" class="flex items-center justify-between p-2 rounded-lg bg-emerald-950/10 border border-emerald-500/10 text-left theme-border">
             <div>
               <div class="flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full ${statusColor}"></span>
                 <span class="text-[10px] font-bold text-emerald-200">${p.name} ${p.geo}</span>
-                <span class="text-[7px] bg-emerald-500/10 text-emerald-400 px-1 rounded uppercase">${p.role}</span>
+                <span class="text-[7px] bg-emerald-500/10 text-emerald-400 px-1 rounded uppercase theme-bg-glow theme-text">${p.role}</span>
               </div>
-              <p class="text-[8px] text-emerald-500/60">Ping: ${p.ping}ms | ${p.device} | State: ${p.status}</p>
+              <p class="text-[8px] text-emerald-500/60 font-medium">Ping: ${p.ping}ms | ${p.device} | State: ${p.status}</p>
             </div>
             
             <div class="flex items-center gap-1">
