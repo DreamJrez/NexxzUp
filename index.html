@@ -23,7 +23,7 @@
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #010402;
-      background-image: radial-gradient(circle at center, rgba(var(--theme-primary), 0.12) 0%, #010403 90%);
+      background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, #010403 90%);
       overscroll-behavior: none;
     }
 
@@ -111,7 +111,7 @@
   <!-- Mobile Frame Container -->
   <div id="main-container" class="relative w-full max-w-md h-container overflow-hidden glass-panel flex justify-between p-3 gap-2 z-20 sm:rounded-[36px]" style="background: rgba(3, 10, 7, 0.65);">
     
-    <!-- Tap-to-Dismiss Backdrop behind details but above background (z-10) -->
+    <!-- Tap-to-Dismiss Backdrop behind details but above background (Standard z-10) -->
     <div id="overlay-backdrop" class="absolute inset-0 bg-black/60 z-10 hidden transition-opacity duration-300 opacity-0" onclick="closeAllMenusAndDetails()"></div>
 
     <!-- LEFT SIDEBAR CONTAINER -->
@@ -121,7 +121,7 @@
         <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
       </button>
 
-      <!-- Left Vertical Menu Column (Slides down and fades in ONLY when Star is active, z-30) -->
+      <!-- Left Vertical Menu Column (Slides down and fades in ONLY when Star is active, Standard z-30) -->
       <div id="left-sidebar-column" class="flex-1 py-4 rounded-2xl bg-black/50 border border-emerald-950/40 flex flex-col justify-between items-center transition-all duration-300 transform -translate-y-4 opacity-0 pointer-events-none mb-1">
         <div class="flex flex-col items-center gap-5 w-full">
           <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
@@ -143,8 +143,8 @@
       </div>
     </div>
 
-    <!-- LEFT EXPANDING SUB-MENU PANEL (Scaled down to w-56, z-20) -->
-    <div id="left-sub-panel" class="absolute left-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-20 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
+    <!-- LEFT EXPANDING SUB-MENU PANEL (Scaled down to w-56, Standard z-30) -->
+    <div id="left-sub-panel" class="absolute left-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-30 translate-x-[-20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <h3 id="left-panel-title" class="text-emerald-400 font-semibold tracking-wide text-xs flex items-center gap-1.5 theme-text">Left Portal</h3>
         <button onclick="closeLeftMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
@@ -154,16 +154,16 @@
       <div id="left-panel-content" class="flex-1 flex flex-col gap-2 overflow-y-auto pr-1"></div>
     </div>
 
-    <!-- CENTER AREA -->
-    <div class="flex-1 flex flex-col justify-center items-center relative px-1 z-15 overflow-hidden">
+    <!-- CENTER AREA (Standard z-20 so its contents render ABOVE the backdrop) -->
+    <div class="flex-1 flex flex-col justify-center items-center relative px-1 z-20 overflow-hidden">
       
       <!-- DEFAULT CENTER: Neon Signature -->
       <div id="signature-container" class="transition-all duration-500 flex flex-col items-center select-none text-center">
         <h1 class="signature text-4xl sm:text-5xl tracking-widest leading-none">DreamJr</h1>
       </div>
 
-      <!-- CENTER DETAIL: Music Player -->
-      <div id="detail-music" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <!-- CENTER DETAIL: Music Player (Standard z-30) -->
+      <div id="detail-music" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('music')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -206,8 +206,8 @@
         </div>
       </div>
 
-      <!-- CENTER DETAIL: Video Player -->
-      <div id="detail-video" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
+      <!-- CENTER DETAIL: Video Player ( z-30) -->
+      <div id="detail-video" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-y-auto">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-1.5 shrink-0">
           <button onclick="handleDetailBack('video')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -241,8 +241,8 @@
         </div>
       </div>
 
-      <!-- CENTER DETAIL: Private Vault -->
-      <div id="detail-private" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <!-- CENTER DETAIL: Private Vault (z-30) -->
+      <div id="detail-private" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
           <button onclick="handleDetailBack('private')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> Back
@@ -261,8 +261,8 @@
         <div id="vault-media-list" class="flex-1 overflow-y-auto space-y-2 pr-1 my-1"></div>
       </div>
 
-      <!-- CENTER DETAIL: Gemini AI Chat -->
-      <div id="detail-ai" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <!-- CENTER DETAIL: Gemini AI Chat (z-30) -->
+      <div id="detail-ai" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="flex flex-col gap-2 pb-2 border-b border-emerald-950/50 shrink-0">
           <div class="flex justify-between items-center">
             <button onclick="handleDetailBack('ai')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -297,8 +297,8 @@
         </div>
       </div>
 
-      <!-- CENTER DETAIL: Social Media -->
-      <div id="detail-social" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <!-- CENTER DETAIL: Social Media (z-30) -->
+      <div id="detail-social" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-y-auto">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 shrink-0">
             <button onclick="handleDetailBack('social')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -331,8 +331,8 @@
         </div>
       </div>
 
-      <!-- CENTER DETAIL: Profile -->
-      <div id="detail-profile" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <!-- CENTER DETAIL: Profile (z-30) -->
+      <div id="detail-profile" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
             <button onclick="handleDetailBack('profile')" class="text-emerald-500/70 flex items-center gap-0.5 text-[10px] py-1 px-1.5 rounded-lg bg-emerald-500/5 theme-text">
@@ -395,8 +395,8 @@
         </div>
       </div>
 
-      <!-- CENTER DETAIL: Advanced Admin Console -->
-      <div id="detail-admin" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <!-- CENTER DETAIL: Advanced Admin Console (z-30) -->
+      <div id="detail-admin" class="absolute inset-y-2 inset-x-2 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
@@ -439,7 +439,6 @@
               </div>
             </div>
 
-            <!-- Lockout switch -->
             <div class="p-2.5 rounded-lg bg-red-950/10 border border-red-500/20 space-y-2">
               <div class="flex justify-between items-center">
                 <div>
@@ -491,8 +490,8 @@
         </div>
       </div>
 
-      <!-- CENTER DETAIL: Advanced System Settings -->
-      <div id="detail-settings" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-20 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+      <!-- CENTER DETAIL: Advanced System Settings (z-30) -->
+      <div id="detail-settings" class="absolute top-12 bottom-12 left-4 right-4 solid-menu-panel rounded-2xl p-3 z-30 opacity-0 pointer-events-none scale-95 transition-all duration-300 flex flex-col justify-between overflow-hidden">
         <div class="w-full h-full flex flex-col justify-between overflow-hidden">
           
           <div class="flex justify-between items-center border-b border-emerald-950/50 pb-2 mb-2 shrink-0">
@@ -557,8 +556,8 @@
 
     </div>
 
-    <!-- RIGHT EXPANDING SUB-MENU PANEL -->
-    <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-20 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
+    <!-- RIGHT EXPANDING SUB-MENU PANEL (Standard z-30) -->
+    <div id="right-sub-panel" class="absolute right-16 w-56 h-[95%] top-[2.5%] solid-menu-panel rounded-2xl z-30 translate-x-[20px] opacity-0 pointer-events-none transition-all duration-300 ease-out p-3.5 flex flex-col">
       <div class="flex items-center justify-between border-b border-emerald-950/50 pb-2.5 mb-2.5 shrink-0">
         <button onclick="closeRightMenu()" class="text-emerald-500/60 hover:text-emerald-400 p-1">
           <i data-lucide="x" class="w-3.5 h-3.5"></i>
@@ -569,13 +568,13 @@
     </div>
 
     <!-- RIGHT SIDEBAR CONTAINER -->
-    <div class="relative w-12 h-full z-30 flex flex-col justify-start">
-      <!-- Right Star Button (Always visible at the top, z-40) -->
+    <div class="relative w-12 h-full z-40 flex flex-col justify-start">
+      <!-- Right Star Button (Always visible at the top, Standard z-40) -->
       <button onclick="toggleRightMenu()" id="btn-right-star" class="w-10 h-10 rounded-full flex items-center justify-center border border-emerald-500/20 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.2)] animate-pulse theme-border theme-text shrink-0 mx-auto mt-1 mb-3">
         <i data-lucide="star" class="w-4.5 h-4.5 fill-emerald-400 roll-icon theme-text"></i>
       </button>
 
-      <!-- Right Vertical Menu Column (Slides down and fades in ONLY when Star is active, z-30) -->
+      <!-- Right Vertical Menu Column (Slides down and fades in ONLY when Star is active, Standard z-30) -->
       <div id="right-sidebar-column" class="flex-1 py-4 rounded-2xl bg-black/50 border border-emerald-950/40 flex flex-col justify-between items-center transition-all duration-300 transform -translate-y-4 opacity-0 pointer-events-none mb-1">
         <div class="flex flex-col items-center gap-5 w-full">
           <div class="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-emerald-500/30">
@@ -1118,6 +1117,7 @@
 
     function setThemeAccent(color) {
       const styleTag = document.getElementById("theme-variable-definitions");
+      const body = document.body;
       if (!styleTag) return;
 
       if (color === 'emerald') {
@@ -1127,6 +1127,7 @@
             --theme-glow: 52, 211, 153;
           }
         `;
+        body.style.backgroundImage = "radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, #010403 90%)";
       } else if (color === 'ruby') {
         styleTag.innerHTML = `
           :root {
@@ -1134,6 +1135,7 @@
             --theme-glow: 248, 113, 113;
           }
         `;
+        body.style.backgroundImage = "radial-gradient(circle at center, rgba(239, 68, 68, 0.15) 0%, #010403 90%)";
       } else if (color === 'sapphire') {
         styleTag.innerHTML = `
           :root {
@@ -1141,6 +1143,7 @@
             --theme-glow: 96, 165, 250;
           }
         `;
+        body.style.backgroundImage = "radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, #010403 90%)";
       } else if (color === 'amber') {
         styleTag.innerHTML = `
           :root {
@@ -1148,6 +1151,7 @@
             --theme-glow: 251, 191, 36;
           }
         `;
+        body.style.backgroundImage = "radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, #010403 90%)";
       }
       localStorage.setItem("dreamjr_accent_color", color);
       
